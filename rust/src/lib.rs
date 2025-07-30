@@ -1,8 +1,8 @@
 use godot::prelude::*;
 
-mod player;
+mod controls;
 
-struct MyExtension;
+struct FastPacedWorkingEnvironment;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for MyExtension {}
+unsafe impl ExtensionLibrary for FastPacedWorkingEnvironment {}

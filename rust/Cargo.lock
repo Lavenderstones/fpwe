@@ -12,6 +12,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "fpwe"
+version = "0.1.0"
+dependencies = [
+ "godot",
+]
+
+[[package]]
 name = "gdextension-api"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -22,13 +29,6 @@ name = "glam"
 version = "0.30.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f2d1aab06663bdce00d6ca5e5ed586ec8d18033a771906c993a1e3755b368d85"
-
-[[package]]
-name = "gmtk2025"
-version = "0.1.0"
-dependencies = [
- "godot",
-]
 
 [[package]]
 name = "godot"

@@ -1,10 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkfomv4n04udt"]
+[gd_scene format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="Texture2D" uid="uid://ccbpsdr2aj0mn" path="res://icon.svg" id="1_ig7tw"]
+[node name="Controls" type="Controls"]
 
-[node name="Node2D" type="Node2D"]
-metadata/_edit_horizontal_guides_ = [-55.0]
+[node name="Deny" type="Button" parent="."]
+offset_left = 714.0
+offset_top = 105.0
+offset_right = 1067.0
+offset_bottom = 221.0
+action_mode = 0
 
-[node name="Player" type="Player" parent="."]
-position = Vector2(396, 323)
-texture = ExtResource("1_ig7tw")
+[node name="Approve" type="Button" parent="."]
+offset_left = 21.0
+offset_top = 92.0
+offset_right = 374.0
+offset_bottom = 208.0
+action_mode = 0

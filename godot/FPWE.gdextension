@@ -1,0 +1,14 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = 4.1
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 =     "res://../rust/target/debug/libfpwe.so"
+linux.release.x86_64 =   "res://../rust/target/release/libfpwe.so"
+windows.debug.x86_64 =   "res://../rust/target/debug/fpwe.dll"
+windows.release.x86_64 = "res://../rust/target/release/fpwe.dll"
+macos.debug =            "res://../rust/target/debug/libfpwe.dylib"
+macos.release =          "res://../rust/target/release/libfpwe.dylib"
+macos.debug.arm64 =      "res://../rust/target/debug/libfpwe.dylib"
+macos.release.arm64 =    "res://../rust/target/release/libfpwe.dylib"
