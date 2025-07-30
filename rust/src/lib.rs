@@ -1,6 +1,6 @@
 use godot::prelude::*;
 
-mod controls;
+mod page;
 
 struct FastPacedWorkingEnvironment;
 

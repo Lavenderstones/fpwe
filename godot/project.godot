@@ -10,6 +10,12 @@ config_version=5
 
 [application]
 
-config/name="GMTK2025"
-run/main_scene="res://main.tscn"
+config/name="Fast Paced Working Environment"
+config/version="1.0.0"
+run/main_scene="uid://bkfomv4n04udt"
 config/features=PackedStringArray("4.4", "Forward Plus")
+
+[display]
+
+window/size/viewport_width=360
+window/size/viewport_height=180
