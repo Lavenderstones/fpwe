@@ -12,3 +12,8 @@ macos.debug =            "res://../rust/target/debug/libfpwe.dylib"
 macos.release =          "res://../rust/target/release/libfpwe.dylib"
 macos.debug.arm64 =      "res://../rust/target/debug/libfpwe.dylib"
 macos.release.arm64 =    "res://../rust/target/release/libfpwe.dylib"
+web.debug.threads.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/debug/fpwe.threads.wasm"
+web.release.threads.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/release/fpwe.threads.wasm"
+web.debug.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/debug/fpwe.wasm"
+web.release.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/release/fpwe.wasm"
+

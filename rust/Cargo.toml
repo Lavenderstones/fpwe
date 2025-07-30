@@ -3,8 +3,15 @@ name = "fpwe"
 version = "0.1.0"
 edition = "2024"
 
+[features]
+nothreads = ["godot/experimental-wasm-nothreads"]
+
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-godot = "0.3.4"
+
+[dependencies.godot]
+git = "https://github.com/godot-rust/gdext"
+rev = "bf3f1d5" # https://github.com/godot-rust/gdext/pull/1251
+features = ["experimental-wasm", "lazy-function-tables"]
