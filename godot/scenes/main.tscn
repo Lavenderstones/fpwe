@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bkfomv4n04udt"]
 
-[node name="Game" type="Game"]
+[node name="Game" type="Game" node_paths=PackedStringArray("score_label")]
+score_label = NodePath("Score")
 
 [node name="Accept" type="Button" parent="."]
 offset_left = 56.0
@@ -15,6 +16,13 @@ offset_top = 50.0
 offset_right = 668.0
 offset_bottom = 126.0
 text = "Unaccept"
+
+[node name="Score" type="Label" parent="."]
+offset_left = 321.0
+offset_top = 189.0
+offset_right = 470.0
+offset_bottom = 277.0
+text = "Score: 0"
 
 [connection signal="pressed" from="Accept" to="." method="handle_choice" binds= [true]]
 [connection signal="pressed" from="Unaccept" to="." method="handle_choice" binds= [false]]
