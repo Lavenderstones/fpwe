@@ -1,22 +1,20 @@
 [gd_scene format=3 uid="uid://bkfomv4n04udt"]
 
-[node name="Main" type="Node2D"]
+[node name="Game" type="Game"]
 
 [node name="Accept" type="Button" parent="."]
-offset_left = 16.0
-offset_top = 20.0
-offset_right = 79.0
-offset_bottom = 51.0
+offset_left = 56.0
+offset_top = 46.0
+offset_right = 344.0
+offset_bottom = 137.0
 text = "Accept"
 
 [node name="Unaccept" type="Button" parent="."]
-offset_left = 254.0
-offset_top = 19.0
-offset_right = 335.0
-offset_bottom = 50.0
+offset_left = 442.0
+offset_top = 50.0
+offset_right = 668.0
+offset_bottom = 126.0
 text = "Unaccept"
 
-[node name="Page" type="Page" parent="."]
-
-[connection signal="pressed" from="Accept" to="Page" method="handle_button" binds= [true]]
-[connection signal="pressed" from="Unaccept" to="Page" method="handle_button" binds= [false]]
+[connection signal="pressed" from="Accept" to="." method="handle_choice" binds= [true]]
+[connection signal="pressed" from="Unaccept" to="." method="handle_choice" binds= [false]]

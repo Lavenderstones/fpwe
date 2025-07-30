@@ -1,23 +1,12 @@
-use godot::prelude::*;
+pub const SHIFT1: [Page; 2] = [Page::new(true), Page::new(false)];
 
-#[derive(GodotClass)]
-#[class(init, base = Node)]
-struct Page {
-    base: Base<Node>,
-
-    /// Whether the page should be accepted or not.
-    #[export]
-    accept: bool,
+#[derive(Clone)]
+pub struct Page {
+    pub accept: bool,
 }
 
-#[godot_api]
 impl Page {
-    #[func]
-    fn handle_button(&mut self, accept: bool) {
-        if self.accept == accept {
-            godot_print!("praise");
-        } else {
-            godot_print!("scold");
-        }
+    pub const fn new(accept: bool) -> Self {
+        Page { accept }
     }
 }
