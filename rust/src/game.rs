@@ -1,5 +1,8 @@
-use crate::page::{Page, SHIFT1};
-use godot::{classes::Label, prelude::*};
+use crate::page::{Page, get_shift1};
+use godot::{
+    classes::{Label, ResourceLoader, Sprite2D, Texture2D},
+    prelude::*,
+};
 
 #[derive(GodotClass)]
 #[class(base = Node)]
@@ -12,21 +15,25 @@ struct Game {
     /// The player's score.
     score: isize,
 
+    // -- subnodes --
     /// The label to display the score.
     #[export]
     score_label: Option<Gd<Label>>,
+    #[export]
+    page_sprite: Option<Gd<Sprite2D>>,
 }
 
 #[godot_api]
 impl INode for Game {
     fn init(base: Base<Node>) -> Self {
-        let mut pages_left = SHIFT1.to_vec();
+        let mut pages_left = get_shift1();
         Self {
             base,
             page: Page::select(&mut pages_left),
             pages_left,
             score: 0,
             score_label: None,
+            page_sprite: None,
         }
     }
 }
@@ -35,9 +42,19 @@ impl Game {
     fn next_page(&mut self) {
         if self.pages_left.is_empty() {
             // todo: next shift
-            self.pages_left = SHIFT1.to_vec();
+            self.pages_left = get_shift1();
         }
         self.page = Page::select(&mut self.pages_left);
+
+        // set the texture
+        if let Some(sprite) = self.page_sprite.as_mut() {
+            let texture = ResourceLoader::singleton()
+                .load(&self.page.asset)
+                .and_then(|res| res.try_cast::<Texture2D>().ok());
+            if let Some(texture) = texture {
+                sprite.set_texture(&texture);
+            }
+        }
     }
 
     fn update_score(&mut self, dx: isize) {

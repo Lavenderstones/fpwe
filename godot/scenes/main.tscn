@@ -1,7 +1,10 @@
-[gd_scene format=3 uid="uid://bkfomv4n04udt"]
+[gd_scene load_steps=2 format=3 uid="uid://bkfomv4n04udt"]
 
-[node name="Game" type="Game" node_paths=PackedStringArray("score_label")]
+[ext_resource type="Texture2D" uid="uid://bgx4e547vjw7q" path="res://assets/page1.jpg" id="1_o5qli"]
+
+[node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page_sprite")]
 score_label = NodePath("Score")
+page_sprite = NodePath("Page")
 
 [node name="Accept" type="Button" parent="."]
 offset_left = 56.0
@@ -23,6 +26,11 @@ offset_top = 189.0
 offset_right = 470.0
 offset_bottom = 277.0
 text = "Score: 0"
+
+[node name="Page" type="Sprite2D" parent="."]
+position = Vector2(512, 217)
+scale = Vector2(0.416, 0.416)
+texture = ExtResource("1_o5qli")
 
 [connection signal="pressed" from="Accept" to="." method="handle_choice" binds= [true]]
 [connection signal="pressed" from="Unaccept" to="." method="handle_choice" binds= [false]]
