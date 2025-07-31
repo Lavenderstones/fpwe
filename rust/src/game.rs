@@ -1,19 +1,19 @@
-use crate::shift::{SHIFT1_PAGES, Shift};
+use crate::shift::Shift;
 use godot::{
-    classes::{Label, ResourceLoader, Sprite2D, Texture2D},
+    classes::{AudioStreamPlayer2D, Label, ResourceLoader, Sprite2D, Texture2D},
     prelude::*,
 };
 
 #[derive(GodotClass)]
-#[class(base = Node)]
+#[class(init, base = Node)]
 struct Game {
     base: Base<Node>,
     shift: Shift,
-    /// The player's score.
     score: isize,
 
     // -- subnodes --
-    /// The label to display the score.
+    #[export]
+    music_player: Option<Gd<AudioStreamPlayer2D>>,
     #[export]
     score_label: Option<Gd<Label>>,
     #[export]
@@ -22,14 +22,10 @@ struct Game {
 
 #[godot_api]
 impl INode for Game {
-    fn init(base: Base<Node>) -> Self {
-        Self {
-            base,
-            shift: SHIFT1_PAGES.into(),
-            score: 0,
-            score_label: None,
-            page_sprite: None,
-        }
+    fn ready(&mut self) {
+        self.music_player
+            .as_mut()
+            .map(|player| self.shift.set_music(player));
     }
 }
 
@@ -37,7 +33,7 @@ impl Game {
     fn next_page(&mut self) {
         if self.shift.is_done() {
             // todo: next shift
-            self.shift = SHIFT1_PAGES.into();
+            self.shift = Shift::default();
         }
         self.shift.next_page();
 

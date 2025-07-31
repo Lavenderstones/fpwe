@@ -2,7 +2,7 @@ use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
-pub struct Menu {
+pub(crate) struct Menu {
     base: Base<Node>,
 }
 
