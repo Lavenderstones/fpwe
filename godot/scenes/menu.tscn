@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://clkvxvmq6yoce"]
+
+[node name="Menu" type="Menu"]
+
+[node name="Start" type="Button" parent="."]
+offset_left = 376.0
+offset_top = 154.0
+offset_right = 422.0
+offset_bottom = 185.0
+text = "Start"
+
+[connection signal="pressed" from="Start" to="." method="start_game"]

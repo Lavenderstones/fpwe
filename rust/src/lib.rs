@@ -1,6 +1,7 @@
 use godot::prelude::*;
 
 mod game;
+mod menu;
 mod shift;
 
 struct FastPacedWorkingEnvironment;

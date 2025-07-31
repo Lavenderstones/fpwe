@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="Texture2D" uid="uid://bgx4e547vjw7q" path="res://assets/pages/page1.jpg" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://bgx4e547vjw7q" path="res://assets/pages/page1.jpg" id="1_uwrxv"]
 
 [node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page_sprite")]
 score_label = NodePath("Score")
@@ -30,7 +30,7 @@ text = "Score: 0"
 [node name="Page" type="Sprite2D" parent="."]
 position = Vector2(512, 217)
 scale = Vector2(0.416, 0.416)
-texture = ExtResource("1_o5qli")
+texture = ExtResource("1_uwrxv")
 
 [connection signal="pressed" from="Accept" to="." method="handle_choice" binds= [true]]
 [connection signal="pressed" from="Unaccept" to="." method="handle_choice" binds= [false]]
