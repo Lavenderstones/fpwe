@@ -1,7 +1,7 @@
 use godot::prelude::*;
 
 mod game;
-mod page;
+mod shift;
 
 struct FastPacedWorkingEnvironment;
 

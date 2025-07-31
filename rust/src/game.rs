@@ -1,4 +1,4 @@
-use crate::page::{Page, get_shift1};
+use crate::shift::{SHIFT1_PAGES, Shift};
 use godot::{
     classes::{Label, ResourceLoader, Sprite2D, Texture2D},
     prelude::*,
@@ -8,10 +8,7 @@ use godot::{
 #[class(base = Node)]
 struct Game {
     base: Base<Node>,
-    /// The current page being displayed.
-    page: Page,
-    /// The pages left in the current shift.
-    pages_left: Vec<Page>,
+    shift: Shift,
     /// The player's score.
     score: isize,
 
@@ -26,11 +23,9 @@ struct Game {
 #[godot_api]
 impl INode for Game {
     fn init(base: Base<Node>) -> Self {
-        let mut pages_left = get_shift1();
         Self {
             base,
-            page: Page::select(&mut pages_left),
-            pages_left,
+            shift: SHIFT1_PAGES.into(),
             score: 0,
             score_label: None,
             page_sprite: None,
@@ -40,16 +35,16 @@ impl INode for Game {
 
 impl Game {
     fn next_page(&mut self) {
-        if self.pages_left.is_empty() {
+        if self.shift.is_done() {
             // todo: next shift
-            self.pages_left = get_shift1();
+            self.shift = SHIFT1_PAGES.into();
         }
-        self.page = Page::select(&mut self.pages_left);
+        self.shift.next_page();
 
         // set the texture
         if let Some(sprite) = self.page_sprite.as_mut() {
             let texture = ResourceLoader::singleton()
-                .load(&self.page.asset)
+                .load(&self.shift.page().asset())
                 .and_then(|res| res.try_cast::<Texture2D>().ok());
             if let Some(texture) = texture {
                 sprite.set_texture(&texture);
@@ -69,12 +64,13 @@ impl Game {
 impl Game {
     #[func]
     fn handle_choice(&mut self, answer: bool) {
-        if self.page.check(answer) {
+        let page = self.shift.page();
+        if page.check(answer) {
             godot_print!("praise");
-            self.update_score(self.page.bonus as isize);
+            self.update_score(page.bonus as isize);
         } else {
             godot_print!("scold");
-            self.update_score(-(self.page.penalty as isize));
+            self.update_score(-(page.penalty as isize));
         }
 
         self.next_page();

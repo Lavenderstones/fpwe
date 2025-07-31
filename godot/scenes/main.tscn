@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="Texture2D" uid="uid://bgx4e547vjw7q" path="res://assets/page1.jpg" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://bgx4e547vjw7q" path="res://assets/pages/page1.jpg" id="1_o5qli"]
 
 [node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page_sprite")]
 score_label = NodePath("Score")
