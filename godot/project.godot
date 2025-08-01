@@ -18,6 +18,12 @@ boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/image="uid://l7puppqdk13j"
 
+[autoload]
+
+Global="*res://gdscript/global.gd"
+Employee="*res://gdscript/employee.gd"
+Sanity="*res://gdscript/sanity.gd"
+
 [display]
 
 window/size/viewport_width=1280

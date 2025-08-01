@@ -5,6 +5,7 @@ extends Node2D
 @onready var _employee_timer = $EmployeeNameReadoutTimer
 @onready var _audio_auxillary = $AuxillaryAudio
 @onready var _company_timer_1 = $CompanyTimer1
+
 var mainAudioTrack = preload("res://assets/audio/miranda/intro/CompanyIntroTemplate.ogg")
 var _mark_audio = preload("res://assets/audio/miranda/employee_names/Employee1.ogg")
 var _judas_audio = preload("res://assets/audio/miranda/employee_names/Employee3.ogg")
