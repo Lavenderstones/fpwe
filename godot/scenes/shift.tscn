@@ -1,42 +1,39 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkfomv4n04udt"]
+[gd_scene load_steps=3 format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="Texture2D" uid="uid://cbo2b062bjrwc" path="res://assets/pages/page1.webp" id="1_o7ulw"]
+[ext_resource type="AudioStream" uid="uid://4l1obkh7l4sk" path="res://assets/audio/shift/0.ogg" id="1_sxo7b"]
+[ext_resource type="Texture2D" uid="uid://cbo2b062bjrwc" path="res://assets/pages/0/0.webp" id="2_sxo7b"]
 
-[node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page_sprite")]
-score_label = NodePath("UI/Score")
-page_sprite = NodePath("Page")
+[node name="Game" type="Game" node_paths=PackedStringArray("page", "title", "description", "music")]
+page = NodePath("UI/Page")
+title = NodePath("UI/Title")
+description = NodePath("UI/Description")
+music = NodePath("Music")
 
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Page" type="Sprite2D" parent="."]
-position = Vector2(512, 217)
-scale = Vector2(0.416, 0.416)
-texture = ExtResource("1_o7ulw")
+[node name="Music" type="AudioPlayer" parent="."]
+restart = true
+stream = ExtResource("1_sxo7b")
+autoplay = true
 
 [node name="UI" type="Node" parent="."]
 
-[node name="Score" type="Label" parent="UI"]
-offset_left = 321.0
-offset_top = 189.0
-offset_right = 470.0
-offset_bottom = 277.0
-text = "Score: 0"
+[node name="Page" type="Sprite2D" parent="UI"]
+position = Vector2(484, 312)
+texture = ExtResource("2_sxo7b")
 
-[node name="Controls" type="Node" parent="UI"]
+[node name="Title" type="Label" parent="UI"]
+offset_left = 466.0
+offset_top = 22.0
+offset_right = 533.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 32
+text = "Title"
 
-[node name="Accept" type="Button" parent="UI/Controls"]
-offset_left = 56.0
-offset_top = 46.0
-offset_right = 344.0
-offset_bottom = 137.0
-text = "Accept"
+[node name="Description" type="Label" parent="UI"]
+offset_left = 456.0
+offset_top = 81.0
+offset_right = 545.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 16
+text = "Description"
 
-[node name="Unaccept" type="Button" parent="UI/Controls"]
-offset_left = 442.0
-offset_top = 50.0
-offset_right = 668.0
-offset_bottom = 126.0
-text = "Unaccept"
-
-[connection signal="pressed" from="UI/Controls/Accept" to="." method="handle_choice" binds= [true]]
-[connection signal="pressed" from="UI/Controls/Unaccept" to="." method="handle_choice" binds= [false]]
+[node name="Buttons" type="Node" parent="UI"]

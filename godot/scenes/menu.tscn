@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://clkvxvmq6yoce"]
 
 [ext_resource type="Texture2D" uid="uid://beyk612hi2vuw" path="res://assets/ui/background.webp" id="1_g3eks"]
+[ext_resource type="AudioStream" uid="uid://bt70dftlkhfy4" path="res://assets/audio/menu.ogg" id="2_g3eks"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="3_g3eks"]
 [ext_resource type="Texture2D" uid="uid://cv5nlcym1lntc" path="res://assets/ui/logo.webp" id="3_v86rl"]
 [ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.webp" id="4_13sgg"]
 [ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="5_i6lef"]
-[ext_resource type="AudioStream" uid="uid://bt70dftlkhfy4" path="res://assets/music/menu.ogg" id="6_g3eks"]
 
 [node name="Menu" type="Menu"]
 
@@ -17,7 +17,7 @@ texture = ExtResource("1_g3eks")
 
 [node name="Music" type="AudioPlayer" parent="."]
 restart = true
-stream = ExtResource("6_g3eks")
+stream = ExtResource("2_g3eks")
 autoplay = true
 
 [node name="UI" type="Node" parent="."]
@@ -27,7 +27,9 @@ position = Vector2(246, 140)
 scale = Vector2(2, 2)
 texture = ExtResource("3_v86rl")
 
-[node name="Start" type="TextureButton" parent="UI"]
+[node name="Buttons" type="Node" parent="UI"]
+
+[node name="Start" type="TextureButton" parent="UI/Buttons"]
 offset_left = 954.0
 offset_top = 59.0
 offset_right = 1201.0
@@ -37,7 +39,7 @@ texture_normal = ExtResource("4_13sgg")
 texture_hover = ExtResource("5_i6lef")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="UI/Start"]
+[node name="Label" type="Label" parent="UI/Buttons/Start"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.081
@@ -49,8 +51,10 @@ theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
 theme_override_fonts/font = ExtResource("3_g3eks")
 theme_override_font_sizes/font_size = 32
 text = "Go to work"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Quit" type="TextureButton" parent="UI"]
+[node name="Quit" type="TextureButton" parent="UI/Buttons"]
 offset_left = 955.0
 offset_top = 265.0
 offset_right = 1201.0
@@ -60,7 +64,7 @@ texture_normal = ExtResource("4_13sgg")
 texture_hover = ExtResource("5_i6lef")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="UI/Quit"]
+[node name="Label" type="Label" parent="UI/Buttons/Quit"]
 layout_mode = 0
 offset_left = 78.0
 offset_top = 70.0
@@ -82,5 +86,5 @@ theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
 theme_override_fonts/font = ExtResource("3_g3eks")
 text = "Fast Paced Working Environment by the LavenderStones team, GMTK 2025 Submission build"
 
-[connection signal="pressed" from="UI/Start" to="." method="start_game"]
-[connection signal="pressed" from="UI/Quit" to="." method="quit_game"]
+[connection signal="pressed" from="UI/Buttons/Start" to="." method="start_game"]
+[connection signal="pressed" from="UI/Buttons/Quit" to="." method="quit_game"]

@@ -1,37 +1,25 @@
 #[derive(Clone)]
 pub(crate) struct Page {
-    accept: bool,
-    asset: &'static str,
-    title: &'static str,
-    description: &'static str,
-    pub(crate) bonus: u8,
-    pub(crate) penalty: u8,
+    /// The title of the page.
+    pub(crate) title: &'static str,
+    /// A description of the page.
+    pub(crate) description: &'static str,
+    /// Whether the page should be accepted.
+    pub(crate) accept: bool,
+    /// The points you recieve for answering the page correctly.
+    pub(crate) bonus: isize,
+    /// The points you lose for answering the page incorrectly.
+    pub(crate) penalty: isize,
 }
 
 impl Page {
-    pub(crate) const fn new(
-        accept: bool,
-        bonus: u8,
-        penalty: u8,
-        asset: &'static str,
-        title: &'static str,
-        description: &'static str,
-    ) -> Self {
-        Page {
-            accept,
-            bonus,
-            penalty,
-            asset,
-            title,
-            description,
-        }
-    }
-
-    pub(crate) fn asset(&self) -> String {
-        format!("res://assets/pages/{}", self.asset)
-    }
-
-    pub(crate) fn check(&self, answer: bool) -> bool {
-        self.accept == answer
+    /// Check if the given answer is correct.
+    ///
+    /// Returns a tuple where the first element is a boolean indicating if the answer was correct,
+    /// and the second element is the score change (bonus or penalty).
+    pub(crate) fn check(&self, answer: bool) -> (bool, isize) {
+        let correct = self.accept == answer;
+        let dx = if correct { self.bonus } else { self.penalty };
+        (correct, dx)
     }
 }

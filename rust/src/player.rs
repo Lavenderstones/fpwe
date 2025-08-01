@@ -1,3 +1,4 @@
+use crate::assets;
 use godot::{
     classes::{AudioStream, AudioStreamPlayer2D, IAudioStreamPlayer2D, ResourceLoader},
     prelude::*,
@@ -32,9 +33,9 @@ impl AudioPlayer {
     }
 
     /// Load an [AudioStream] from the given path.
-    pub(crate) fn load(path: &str) -> Gd<AudioStream> {
+    fn load(path: &str) -> Gd<AudioStream> {
         ResourceLoader::singleton()
-            .load(&format!("res://assets/{}", path))
+            .load(&assets(&format!("audio/{}", path)))
             .and_then(|res| res.try_cast::<AudioStream>().ok())
             .expect("audio must be valid")
     }

@@ -5,7 +5,11 @@ mod menu;
 mod player;
 mod shift;
 
-struct FastPacedWorkingEnvironment;
+pub(crate) fn assets(path: &str) -> String {
+    format!("res://assets/{}", path)
+}
+
+struct FPWE;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for FastPacedWorkingEnvironment {}
+unsafe impl ExtensionLibrary for FPWE {}
