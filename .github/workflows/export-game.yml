@@ -1,0 +1,165 @@
+name: Export Game Builds
+
+on:
+  workflow_call:
+
+jobs:
+  setup-godot:
+    name: Setup Godot and Templates
+    runs-on: ubuntu-latest
+    outputs:
+      godot-cache-key: ${{ steps.godot-cache-key.outputs.key }}
+    steps:
+    - name: Generate Godot cache key
+      id: godot-cache-key
+      run: echo "key=godot-${{ vars.GODOT_VERSION }}" >> $GITHUB_OUTPUT
+
+    - name: Cache Godot and templates
+      id: godot-cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          godot-headless
+          ~/.local/share/godot/export_templates
+        key: ${{ steps.godot-cache-key.outputs.key }}
+
+  export-game:
+    name: Export ${{ matrix.preset.name }}
+    needs: setup-godot
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        preset:
+          - name: "Windows (x86_64)"
+            index: 0
+            artifact-name: "windows-x86_64"
+            rust-artifact: "rust-Windows x86_64"
+            rust-output: "fpwe.dll"
+            
+          - name: "Windows (arm64)"
+            index: 1
+            artifact-name: "windows-arm64"
+            rust-artifact: "rust-Windows ARM64"
+            rust-output: "fpwe.dll"
+            
+          - name: "Linux (x86_64)"
+            index: 2
+            artifact-name: "linux-x86_64"
+            rust-artifact: "rust-Linux x86_64"
+            rust-output: "libfpwe.so"
+            
+          - name: "Linux (arm64)"
+            index: 3
+            artifact-name: "linux-arm64"
+            rust-artifact: "rust-Linux ARM64"
+            rust-output: "libfpwe.so"
+            
+          - name: "macOS"
+            index: 4
+            artifact-name: "macos-universal"
+            rust-artifacts: 
+              - "rust-macOS x86_64"
+              - "rust-macOS ARM64"
+            rust-outputs:
+              - "libfpwe.dylib"
+              - "libfpwe.dylib"
+            
+          - name: "Multithreaded Web"
+            index: 5
+            artifact-name: "web-multithreaded"
+            rust-artifact: "rust-Web Threaded"
+            rust-output: "fpwe.threads.wasm"
+            
+          - name: "Singlethreaded Web"
+            index: 6
+            artifact-name: "web-singlethreaded"
+            rust-artifact: "rust-Web Single-threaded"
+            rust-output: "fpwe.wasm"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Restore Godot cache
+      uses: actions/cache/restore@v4
+      with:
+        path: |
+          godot-headless
+          ~/.local/share/godot/export_templates
+        key: ${{ needs.setup-godot.outputs.godot-cache-key }}
+        fail-on-cache-miss: true
+
+    - name: Download Rust artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ matrix.preset.rust-artifact || matrix.preset.rust-artifacts[0] }}
+        path: rust-artifacts/
+
+    - name: Download additional macOS Rust artifacts
+      if: matrix.preset.artifact-name == 'macos-universal'
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ matrix.preset.rust-artifacts[1] }}
+        path: rust-artifacts-arm64/
+
+    - name: Create target directory structure and copy Rust extension
+      run: |
+        # Create the target directory structure that matches the GDExtension config
+        case "${{ matrix.preset.artifact-name }}" in
+          "windows-x86_64")
+            mkdir -p rust/target/x86_64-pc-windows-msvc/release
+            cp "rust-artifacts/${{ matrix.preset.rust-output }}" "rust/target/x86_64-pc-windows-msvc/release/"
+            ;;
+          "windows-arm64")
+            mkdir -p rust/target/aarch64-pc-windows-msvc/release
+            cp "rust-artifacts/${{ matrix.preset.rust-output }}" "rust/target/aarch64-pc-windows-msvc/release/"
+            ;;
+          "linux-x86_64")
+            mkdir -p rust/target/x86_64-unknown-linux-gnu/release
+            cp "rust-artifacts/${{ matrix.preset.rust-output }}" "rust/target/x86_64-unknown-linux-gnu/release/"
+            ;;
+          "linux-arm64")
+            mkdir -p rust/target/aarch64-unknown-linux-gnu/release
+            cp "rust-artifacts/${{ matrix.preset.rust-output }}" "rust/target/aarch64-unknown-linux-gnu/release/"
+            ;;
+          "macos-universal")
+            mkdir -p rust/target/x86_64-apple-darwin/release
+            mkdir -p rust/target/aarch64-apple-darwin/release
+            cp "rust-artifacts/libfpwe.dylib" "rust/target/x86_64-apple-darwin/release/"
+            cp "rust-artifacts-arm64/libfpwe.dylib" "rust/target/aarch64-apple-darwin/release/"
+            ;;
+          "web-multithreaded"|"web-singlethreaded")
+            mkdir -p rust/target/wasm32-unknown-emscripten/release
+            cp "rust-artifacts/${{ matrix.preset.rust-output }}" "rust/target/wasm32-unknown-emscripten/release/"
+            ;;
+        esac
+
+    - name: Create export directory
+      run: mkdir -p exports/${{ matrix.preset.artifact-name }}
+
+    - name: Export game
+      run: |
+        cd godot
+        ../godot-headless --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/${{ vars.EXPORT_NAME }}"
+
+    - name: Create archive for upload
+      run: |
+        cd exports/${{ matrix.preset.artifact-name }}
+        if [[ "${{ matrix.preset.name }}" == *"Web"* ]]; then
+          # For web builds, zip all the web files
+          zip -r "../../${{ vars.EXPORT_NAME }}-${{ matrix.preset.artifact-name }}.zip" .
+        elif [[ "${{ matrix.preset.name }}" == "macOS" ]]; then
+          # For macOS, create a zip of the .app bundle
+          zip -r "../../${{ vars.EXPORT_NAME }}-${{ matrix.preset.artifact-name }}.zip" .
+        else
+          # For Windows and Linux, zip the executable and any accompanying files
+          zip -r "../../${{ vars.EXPORT_NAME }}-${{ matrix.preset.artifact-name }}.zip" .
+        fi
+
+    - name: Upload game build
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ vars.EXPORT_NAME }}-${{ matrix.preset.artifact-name }}
+        path: ${{ vars.EXPORT_NAME }}-${{ matrix.preset.artifact-name }}.zip
+        retention-days: 30
