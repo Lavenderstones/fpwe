@@ -14,8 +14,17 @@ config/name="Fast Paced Working Environment"
 config/version="1.0.0"
 run/main_scene="uid://clkvxvmq6yoce"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/image="uid://b0iobmj8xjsqs"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/resizable=false
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
