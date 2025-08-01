@@ -1,6 +1,6 @@
-use crate::shift::Shift;
+use crate::{player::AudioPlayer, shift::Shift};
 use godot::{
-    classes::{AudioStreamPlayer2D, Label, ResourceLoader, Sprite2D, Texture2D},
+    classes::{Label, ResourceLoader, Sprite2D, Texture2D},
     prelude::*,
 };
 
@@ -11,9 +11,9 @@ struct Game {
     shift: Shift,
     score: isize,
 
-    // -- subnodes --
     #[export]
-    music_player: Option<Gd<AudioStreamPlayer2D>>,
+    player: Option<Gd<AudioPlayer>>,
+
     #[export]
     score_label: Option<Gd<Label>>,
     #[export]
@@ -23,9 +23,9 @@ struct Game {
 #[godot_api]
 impl INode for Game {
     fn ready(&mut self) {
-        self.music_player
+        self.player
             .as_mut()
-            .map(|player| self.shift.set_music(player));
+            .map(|player| player.bind_mut().play(self.shift.music));
     }
 }
 

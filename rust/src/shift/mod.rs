@@ -5,6 +5,8 @@ use godot::{
 use page::Page;
 use rand::seq::SliceRandom;
 
+use crate::player::AudioPlayer;
+
 mod page;
 
 pub(crate) const SCENE_URL: &str = "res://scenes/shift.tscn";
@@ -24,7 +26,7 @@ pub(crate) struct ShiftData<const N: usize> {
 pub(crate) struct Shift {
     left: Vec<Page>,
     current: Page,
-    music: Gd<AudioStream>,
+    pub(crate) music: &'static str,
 }
 
 impl Default for Shift {
@@ -49,21 +51,11 @@ impl Shift {
         let mut rng = rand::rng();
         left.shuffle(&mut rng);
         let current = select_page(&mut left).expect("shift must have at least one page");
-        let music = ResourceLoader::singleton()
-            .load(&format!("res://assets/music/{}", data.music))
-            .and_then(|res| res.try_cast::<AudioStream>().ok())
-            .expect("music must be valid");
         Self {
             left,
             current,
-            music,
+            music: data.music,
         }
-    }
-
-    pub(crate) fn set_music(&self, player: &mut Gd<AudioStreamPlayer2D>) {
-        player.stop();
-        player.set_stream(&self.music);
-        player.play();
     }
 
     /// Move to the next [Page] in the [Shift].

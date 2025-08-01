@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ds8cjwim4u8uo" path="res://assets/ui/button/click.png" id="2_4ytvr"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="3_g3eks"]
 [ext_resource type="Texture2D" uid="uid://cyh1svfe2ey0g" path="res://assets/ui/background.png" id="5_v86rl"]
-[ext_resource type="AudioStream" uid="uid://bt70dftlkhfy4" path="res://assets/music/Stage0.ogg" id="6_g3eks"]
+[ext_resource type="AudioStream" uid="uid://bt70dftlkhfy4" path="res://assets/music/menu.ogg" id="6_g3eks"]
 
 [node name="Menu" type="Menu"]
 

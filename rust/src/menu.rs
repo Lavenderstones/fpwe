@@ -1,12 +1,13 @@
-use godot::{classes::{AudioStream, AudioStreamPlayer2D, ResourceLoader}, prelude::*};
+use crate::player::AudioPlayer;
+use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
 pub(crate) struct Menu {
     base: Base<Node>,
+
     #[export]
-    music_player: Option<Gd<AudioStreamPlayer2D>>,
-    music: Gd<AudioStream>
+    player: Option<Gd<AudioPlayer>>,
 }
 
 #[godot_api]
@@ -20,17 +21,8 @@ impl Menu {
 
     #[func]
     fn on_music_stop(&mut self) {
-        self.music_player
-        .as_mut()
-        .map(|player| {
-            let music = ResourceLoader::singleton()
-            .load("res://assets/music/Stage0.ogg")
-            .and_then(|res| res.try_cast::<AudioStream>().ok())
-            .expect("music must be valid");
-
-            player.stop();
-            player.set_stream(&music);
-            player.play();
+        self.player.as_mut().map(|player| {
+            player.bind_mut().play("music/menu.ogg");
         });
     }
 }
