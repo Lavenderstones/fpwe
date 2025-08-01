@@ -16,7 +16,6 @@ scale = Vector2(4.01667, 4.01667)
 texture = ExtResource("1_g3eks")
 
 [node name="Music" type="AudioPlayer" parent="."]
-restart = true
 stream = ExtResource("2_g3eks")
 autoplay = true
 

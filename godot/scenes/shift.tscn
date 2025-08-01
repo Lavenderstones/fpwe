@@ -1,39 +1,108 @@
-[gd_scene load_steps=3 format=3 uid="uid://bkfomv4n04udt"]
+[gd_scene load_steps=6 format=3 uid="uid://bkfomv4n04udt"]
 
 [ext_resource type="AudioStream" uid="uid://4l1obkh7l4sk" path="res://assets/audio/shift/0.ogg" id="1_sxo7b"]
-[ext_resource type="Texture2D" uid="uid://cbo2b062bjrwc" path="res://assets/pages/0/0.webp" id="2_sxo7b"]
+[ext_resource type="Texture2D" uid="uid://bgn6lktql3pxg" path="res://assets/pages/0/0.webp" id="2_sxo7b"]
+[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.webp" id="3_cajfp"]
+[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="4_h662l"]
+[ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="5_m03re"]
 
-[node name="Game" type="Game" node_paths=PackedStringArray("page", "title", "description", "music")]
+[node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page", "title", "description", "music", "miranda")]
+score_label = NodePath("UI/Score")
 page = NodePath("UI/Page")
 title = NodePath("UI/Title")
 description = NodePath("UI/Description")
-music = NodePath("Music")
+music = NodePath("Audio/Music")
+miranda = NodePath("Audio/Miranda")
 
-[node name="Music" type="AudioPlayer" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="Music" type="AudioPlayer" parent="Audio"]
 restart = true
 stream = ExtResource("1_sxo7b")
 autoplay = true
 
+[node name="Miranda" type="AudioPlayer" parent="Audio"]
+volume_db = 10.0
+
 [node name="UI" type="Node" parent="."]
 
 [node name="Page" type="Sprite2D" parent="UI"]
-position = Vector2(484, 312)
+position = Vector2(131.5, 248)
+scale = Vector2(2.1125, 2.1125)
 texture = ExtResource("2_sxo7b")
 
 [node name="Title" type="Label" parent="UI"]
-offset_left = 466.0
-offset_top = 22.0
-offset_right = 533.0
-offset_bottom = 67.0
+offset_left = 90.5
+offset_top = 20.0
+offset_right = 157.5
+offset_bottom = 65.0
 theme_override_font_sizes/font_size = 32
 text = "Title"
 
 [node name="Description" type="Label" parent="UI"]
-offset_left = 456.0
-offset_top = 81.0
-offset_right = 545.0
-offset_bottom = 104.0
+offset_left = 80.5
+offset_top = 79.0
+offset_right = 169.5
+offset_bottom = 102.0
 theme_override_font_sizes/font_size = 16
 text = "Description"
 
+[node name="Score" type="Label" parent="UI"]
+offset_left = 279.0
+offset_top = 96.0
+offset_right = 319.0
+offset_bottom = 119.0
+text = "0"
+
 [node name="Buttons" type="Node" parent="UI"]
+
+[node name="Accept" type="TextureButton" parent="UI/Buttons"]
+offset_left = 954.0
+offset_top = 59.0
+offset_right = 1201.0
+offset_bottom = 232.0
+action_mode = 0
+texture_normal = ExtResource("3_cajfp")
+texture_hover = ExtResource("4_h662l")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="UI/Buttons/Accept"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.081
+offset_left = 53.0
+offset_top = 68.0
+offset_right = 184.993
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("5_m03re")
+theme_override_font_sizes/font_size = 32
+text = "Accept"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Unaccept" type="TextureButton" parent="UI/Buttons"]
+offset_left = 955.0
+offset_top = 265.0
+offset_right = 1201.0
+offset_bottom = 437.0
+action_mode = 0
+texture_normal = ExtResource("3_cajfp")
+texture_hover = ExtResource("4_h662l")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UI/Buttons/Unaccept"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 70.0
+offset_right = 191.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("5_m03re")
+theme_override_font_sizes/font_size = 32
+text = "Unaccept"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="UI/Buttons/Accept" to="." method="handle_choice" binds= [true]]
+[connection signal="pressed" from="UI/Buttons/Unaccept" to="." method="handle_choice" binds= [false]]

@@ -1,14 +1,9 @@
-use crate::player::AudioPlayer;
 use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
 struct Menu {
-    base: Base<Node>,
-
-    /// The music player for the menu.
-    #[export]
-    music: Option<Gd<AudioPlayer>>,
+    base: Base<Node>
 }
 
 #[godot_api]

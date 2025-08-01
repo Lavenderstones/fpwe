@@ -1,3 +1,5 @@
+set dotenv-path := "rust/.env"
+
 cargo +args:
     cd rust && cargo {{args}}
 

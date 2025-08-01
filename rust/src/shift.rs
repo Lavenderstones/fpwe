@@ -1,4 +1,4 @@
-use crate::shift::data::SHIFT1;
+use crate::shift::data::REGULAR;
 use page::Page;
 use rand::seq::IndexedRandom;
 use std::collections::HashSet;
@@ -12,15 +12,20 @@ pub(crate) struct Shift {
     seen: HashSet<usize>,
 }
 
-impl Default for Shift {
-    fn default() -> Self {
-        let pages = &SHIFT1;
+impl From<&'static [Page]> for Shift {
+    fn from(pages: &'static [Page]) -> Self {
         let index = rand::random_range(0..pages.len());
         Shift {
             pages,
             index,
             seen: HashSet::new(),
         }
+    }
+}
+
+impl Default for Shift {
+    fn default() -> Self {
+        (&REGULAR[..]).into()
     }
 }
 
