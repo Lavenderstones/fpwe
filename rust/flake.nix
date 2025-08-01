@@ -1,6 +1,4 @@
 {
-  description = "An empty flake template that can be adapted to your environment";
-
   outputs =
     { nixpkgs, utils, ... }:
     utils.lib.eachDefaultSystem (

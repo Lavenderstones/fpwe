@@ -14,7 +14,7 @@ impl Menu {
     #[func]
     fn start_game(&self) {
         if let Some(tree) = self.base().get_tree().as_mut() {
-            tree.change_scene_to_file("res://scenes/game.tscn");
+            tree.change_scene_to_file(crate::shift::SCENE_URL);
         }
     }
 

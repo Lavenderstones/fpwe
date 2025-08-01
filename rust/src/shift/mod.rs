@@ -7,6 +7,7 @@ use rand::seq::SliceRandom;
 
 mod page;
 
+pub(crate) const SCENE_URL: &str = "res://scenes/shift.tscn";
 pub(crate) const SHIFT1: ShiftData<2> = ShiftData {
     pages: [
         Page::new(true, 10, 100, "page1.jpg", "page 1", "woahg"),

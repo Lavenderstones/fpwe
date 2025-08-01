@@ -1,21 +1,36 @@
 [gd_scene load_steps=7 format=3 uid="uid://clkvxvmq6yoce"]
 
-[ext_resource type="Texture2D" uid="uid://klhcx8ti1o2m" path="res://assets/UI/ButtonNormal.png" id="1_vjb58"]
-[ext_resource type="Texture2D" uid="uid://b0iobmj8xjsqs" path="res://assets/UI/logo.png" id="1_yqeox"]
-[ext_resource type="Texture2D" uid="uid://ds8cjwim4u8uo" path="res://assets/UI/ButtonClick.png" id="2_4ytvr"]
+[ext_resource type="Texture2D" uid="uid://klhcx8ti1o2m" path="res://assets/ui/button/normal.png" id="1_vjb58"]
+[ext_resource type="Texture2D" uid="uid://b0iobmj8xjsqs" path="res://assets/ui/logo.png" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://ds8cjwim4u8uo" path="res://assets/ui/button/click.png" id="2_4ytvr"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="3_g3eks"]
-[ext_resource type="Texture2D" uid="uid://cyh1svfe2ey0g" path="res://assets/UI/Background.png" id="5_v86rl"]
+[ext_resource type="Texture2D" uid="uid://cyh1svfe2ey0g" path="res://assets/ui/background.png" id="5_v86rl"]
 [ext_resource type="AudioStream" uid="uid://bt70dftlkhfy4" path="res://assets/music/Stage0.ogg" id="6_g3eks"]
 
 [node name="Menu" type="Menu"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="."]
 z_index = -4
 position = Vector2(642.667, 360.5)
 scale = Vector2(4.01667, 4.01667)
 texture = ExtResource("5_v86rl")
 
-[node name="Start" type="TextureButton" parent="."]
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_g3eks")
+autoplay = true
+max_distance = 1243.0
+attenuation = 0.57435
+panning_strength = 2.83
+area_mask = 153
+
+[node name="UI" type="Node" parent="."]
+
+[node name="Logo" type="Sprite2D" parent="UI"]
+position = Vector2(246, 140)
+scale = Vector2(2, 2)
+texture = ExtResource("1_yqeox")
+
+[node name="Start" type="TextureButton" parent="UI"]
 offset_left = 954.0
 offset_top = 59.0
 offset_right = 1201.0
@@ -25,7 +40,7 @@ texture_normal = ExtResource("1_vjb58")
 texture_hover = ExtResource("2_4ytvr")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="Start"]
+[node name="Label" type="Label" parent="UI/Start"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.081
@@ -38,12 +53,7 @@ theme_override_fonts/font = ExtResource("3_g3eks")
 theme_override_font_sizes/font_size = 32
 text = "Go to work"
 
-[node name="logo" type="Sprite2D" parent="."]
-position = Vector2(246, 140)
-scale = Vector2(2, 2)
-texture = ExtResource("1_yqeox")
-
-[node name="Quit" type="TextureButton" parent="."]
+[node name="Quit" type="TextureButton" parent="UI"]
 offset_left = 955.0
 offset_top = 265.0
 offset_right = 1201.0
@@ -53,7 +63,7 @@ texture_normal = ExtResource("1_vjb58")
 texture_hover = ExtResource("2_4ytvr")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="Quit"]
+[node name="Label" type="Label" parent="UI/Quit"]
 layout_mode = 0
 offset_left = 78.0
 offset_top = 70.0
@@ -66,7 +76,7 @@ text = "Resign"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="Footer" type="Label" parent="UI"]
 offset_left = 9.0
 offset_top = 690.0
 offset_right = 637.0
@@ -75,13 +85,5 @@ theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
 theme_override_fonts/font = ExtResource("3_g3eks")
 text = "Fast Paced Working Environment by the LavenderStones team, GMTK 2025 Submission build"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_g3eks")
-autoplay = true
-max_distance = 1243.0
-attenuation = 0.57435
-panning_strength = 2.83
-area_mask = 153
-
-[connection signal="pressed" from="Start" to="." method="start_game"]
-[connection signal="finished" from="AudioStreamPlayer2D" to="." method="on_music_stop"]
+[connection signal="finished" from="Music" to="." method="on_music_stop"]
+[connection signal="pressed" from="UI/Start" to="." method="start_game"]
