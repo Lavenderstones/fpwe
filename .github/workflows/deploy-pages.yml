@@ -14,41 +14,41 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Download Web Multithreaded build
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ vars.EXPORT_NAME }}-web-multithreaded
-        path: web-builds/
+      - name: Download Web Multithreaded build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ vars.EXPORT_NAME }}-web-multithreaded
+          path: web-builds/
 
-    - name: Download Web Singlethreaded build
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ vars.EXPORT_NAME }}-web-singlethreaded
-        path: web-builds/
+      - name: Download Web Singlethreaded build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ vars.EXPORT_NAME }}-web-singlethreaded
+          path: web-builds/
 
-    - name: Extract and organize web builds
-      run: |
-        mkdir -p pages/single
-        
-        # Extract builds - multithreaded goes to root, single-threaded to /single
-        cd web-builds
-        unzip -q "${{ vars.EXPORT_NAME }}-web-multithreaded.zip" -d ../pages/
-        unzip -q "${{ vars.EXPORT_NAME }}-web-singlethreaded.zip" -d ../pages/single/
-        cd ..
+      - name: Extract and organize web builds
+        run: |
+          mkdir -p pages/single
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
+          # Extract builds - multithreaded goes to root, single-threaded to /single
+          cd web-builds
+          unzip -q "${{ vars.EXPORT_NAME }}-web-multithreaded.zip" -d ../pages/
+          unzip -q "${{ vars.EXPORT_NAME }}-web-singlethreaded.zip" -d ../pages/single/
+          cd ..
 
-    - name: Upload to GitHub Pages
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: pages/
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Upload to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: pages/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

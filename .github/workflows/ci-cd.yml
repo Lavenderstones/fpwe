@@ -2,9 +2,15 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+    paths:
+      - "godot/**"
+      - "rust/**"
   pull_request:
-    branches: [ main ]
+    branches: [main]
+    paths:
+      - "godot/**"
+      - "rust/**"
   workflow_dispatch:
 
 jobs:
@@ -13,7 +19,7 @@ jobs:
     name: Build Rust Extensions
     uses: ./.github/workflows/build-rust.yml
 
-  # export game builds for all platforms  
+  # export game builds for all platforms
   export-game:
     name: Export Game Builds
     needs: build-rust
@@ -36,15 +42,15 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-    - name: Delete temporary Rust artifacts
-      uses: geekyeggo/delete-artifact@v5
-      with:
-        name: |
-          rust-Windows x86_64
-          rust-Windows ARM64
-          rust-Linux x86_64
-          rust-Linux ARM64
-          rust-macOS Universal
-          rust-Web Threaded
-          rust-Web Single-threaded
-        failOnError: false
+      - name: Delete temporary Rust artifacts
+        uses: geekyeggo/delete-artifact@v5
+        with:
+          name: |
+            rust-Windows x86_64
+            rust-Windows ARM64
+            rust-Linux x86_64
+            rust-Linux ARM64
+            rust-macOS Universal
+            rust-Web Threaded
+            rust-Web Single-threaded
+          failOnError: false

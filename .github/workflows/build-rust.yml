@@ -1,16 +1,6 @@
 name: Build Rust Extensions
 
 on:
-  push:
-    branches: [ main ]
-    paths: 
-      - 'rust/**'
-      - '.github/workflows/build-rust.yml'
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'rust/**'
-      - '.github/workflows/build-rust.yml'
   workflow_call:
     outputs:
       cache-key:
@@ -32,41 +22,41 @@ jobs:
             runner: windows-latest
             target: x86_64-pc-windows-msvc
             output: fpwe.dll
-            
+
           - name: Windows ARM64
             runner: windows-latest
             target: aarch64-pc-windows-msvc
             output: fpwe.dll
-            
+
           # Linux
           - name: Linux x86_64
             runner: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             output: libfpwe.so
-            
+
           - name: Linux ARM64
             runner: ubuntu-latest
             target: aarch64-unknown-linux-gnu
             output: libfpwe.so
-            
+
           # macOS
           - name: macOS x86_64
             runner: macos-latest
             target: x86_64-apple-darwin
             output: libfpwe.dylib
-            
+
           - name: macOS ARM64
             runner: macos-latest
             target: aarch64-apple-darwin
             output: libfpwe.dylib
-            
+
           # Web (threaded)
           - name: Web Threaded
             runner: ubuntu-latest
             target: wasm32-unknown-emscripten
             output: fpwe.threads.wasm
             features: ""
-            
+
           # Web (single-threaded)
           - name: Web Single-threaded
             runner: ubuntu-latest
@@ -75,99 +65,99 @@ jobs:
             features: nothreads
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-    - name: Generate cache key
-      id: cache-key
-      shell: bash
-      run: |
-        CACHE_KEY="rust-${{ matrix.target }}-${{ hashFiles('rust/Cargo.lock', 'rust/Cargo.toml', 'rust/src/**') }}"
-        echo "key=$CACHE_KEY" >> $GITHUB_OUTPUT
-        echo "Cache key: $CACHE_KEY"
+      - name: Generate cache key
+        id: cache-key
+        shell: bash
+        run: |
+          CACHE_KEY="rust-${{ matrix.target }}-${{ hashFiles('rust/Cargo.lock', 'rust/Cargo.toml', 'rust/src/**') }}"
+          echo "key=$CACHE_KEY" >> $GITHUB_OUTPUT
+          echo "Cache key: $CACHE_KEY"
 
-    - name: Check if build is cached
-      id: cache-check
-      uses: actions/cache@v4
-      with:
-        path: rust-build-cache/${{ matrix.name }}
-        key: ${{ steps.cache-key.outputs.key }}
-        lookup-only: true
+      - name: Check if build is cached
+        id: cache-check
+        uses: actions/cache@v4
+        with:
+          path: rust-build-cache/${{ matrix.name }}
+          key: ${{ steps.cache-key.outputs.key }}
+          lookup-only: true
 
-    - name: Setup Rust
-      if: steps.cache-check.outputs.cache-hit != 'true'
-      uses: dtolnay/rust-toolchain@nightly
-      with:
-        targets: ${{ matrix.target }}
+      - name: Setup Rust
+        if: steps.cache-check.outputs.cache-hit != 'true'
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: ${{ matrix.target }}
 
-    - name: Install cross-compilation tools (Linux ARM64)
-      if: matrix.target == 'aarch64-unknown-linux-gnu'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-aarch64-linux-gnu
+      - name: Install cross-compilation tools (Linux ARM64)
+        if: matrix.target == 'aarch64-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu
 
-    - name: Setup Emscripten (Web)
-      if: matrix.target == 'wasm32-unknown-emscripten'
-      uses: mymindstorm/setup-emsdk@v14
-      with:
-        version: 3.1.74
+      - name: Setup Emscripten (Web)
+        if: matrix.target == 'wasm32-unknown-emscripten'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 3.1.74
 
-    - name: Cache Rust dependencies
-      if: steps.cache-check.outputs.cache-hit != 'true'
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.cargo/bin/
-          ~/.cargo/registry/index/
-          ~/.cargo/registry/cache/
-          ~/.cargo/git/db/
-          rust/target/
-        key: ${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-        restore-keys: |
-          ${{ matrix.target }}-cargo-
+      - name: Cache Rust dependencies
+        if: steps.cache-check.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            rust/target/
+          key: ${{ matrix.target }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ matrix.target }}-cargo-
 
-    - name: Build Rust extension
-      if: steps.cache-check.outputs.cache-hit != 'true'
-      working-directory: rust
-      run: |
-        ${{ matrix.features && format('cargo build --release --target {0} --features {1}', matrix.target, matrix.features) || format('cargo build --release --target {0}', matrix.target) }}
-      env:
-        CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+      - name: Build Rust extension
+        if: steps.cache-check.outputs.cache-hit != 'true'
+        working-directory: rust
+        run: |
+          ${{ matrix.features && format('cargo build --release --target {0} --features {1}', matrix.target, matrix.features) || format('cargo build --release --target {0}', matrix.target) }}
+        env:
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
 
-    - name: Prepare build cache
-      if: steps.cache-check.outputs.cache-hit != 'true'
-      shell: bash
-      run: |
-        mkdir -p "rust-build-cache/${{ matrix.name }}"
-        if [[ "${{ matrix.target }}" == "wasm32-unknown-emscripten" ]]; then
-          if [[ "${{ matrix.name }}" == "Web Threaded" ]]; then
-            cp "rust/target/${{ matrix.target }}/release/fpwe.wasm" "rust-build-cache/${{ matrix.name }}/fpwe.threads.wasm"
+      - name: Prepare build cache
+        if: steps.cache-check.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          mkdir -p "rust-build-cache/${{ matrix.name }}"
+          if [[ "${{ matrix.target }}" == "wasm32-unknown-emscripten" ]]; then
+            if [[ "${{ matrix.name }}" == "Web Threaded" ]]; then
+              cp "rust/target/${{ matrix.target }}/release/fpwe.wasm" "rust-build-cache/${{ matrix.name }}/fpwe.threads.wasm"
+            else
+              cp "rust/target/${{ matrix.target }}/release/fpwe.wasm" "rust-build-cache/${{ matrix.name }}/fpwe.wasm"
+            fi
           else
-            cp "rust/target/${{ matrix.target }}/release/fpwe.wasm" "rust-build-cache/${{ matrix.name }}/fpwe.wasm"
+            cp "rust/target/${{ matrix.target }}/release/${{ matrix.output }}" "rust-build-cache/${{ matrix.name }}/"
           fi
-        else
-          cp "rust/target/${{ matrix.target }}/release/${{ matrix.output }}" "rust-build-cache/${{ matrix.name }}/"
-        fi
 
-    - name: Cache built extension
-      if: steps.cache-check.outputs.cache-hit != 'true'
-      uses: actions/cache/save@v4
-      with:
-        path: rust-build-cache/${{ matrix.name }}
-        key: ${{ steps.cache-key.outputs.key }}
+      - name: Cache built extension
+        if: steps.cache-check.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: rust-build-cache/${{ matrix.name }}
+          key: ${{ steps.cache-key.outputs.key }}
 
-    - name: Restore from cache
-      if: steps.cache-check.outputs.cache-hit == 'true'
-      uses: actions/cache/restore@v4
-      with:
-        path: rust-build-cache/${{ matrix.name }}
-        key: ${{ steps.cache-key.outputs.key }}
+      - name: Restore from cache
+        if: steps.cache-check.outputs.cache-hit == 'true'
+        uses: actions/cache/restore@v4
+        with:
+          path: rust-build-cache/${{ matrix.name }}
+          key: ${{ steps.cache-key.outputs.key }}
 
-    - name: Upload Rust artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: rust-${{ matrix.name }}
-        path: rust-build-cache/${{ matrix.name }}/
-        retention-days: 1
+      - name: Upload Rust artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-${{ matrix.name }}
+          path: rust-build-cache/${{ matrix.name }}/
+          retention-days: 1
