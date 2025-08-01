@@ -1,6 +1,5 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkfomv4n04udt"]
+[gd_scene load_steps=8 format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="AudioStream" uid="uid://4l1obkh7l4sk" path="res://assets/audio/shift/0.ogg" id="1_sxo7b"]
 [ext_resource type="Texture2D" uid="uid://4nxqimngo0r6" path="res://assets/ui/screen.webp" id="2_m03re"]
 [ext_resource type="Texture2D" uid="uid://bgn6lktql3pxg" path="res://assets/pages/0/0.webp" id="2_sxo7b"]
 [ext_resource type="Texture2D" uid="uid://cnc7cqfwtkgpq" path="res://assets/ui/Desk.webp" id="3_5i7ea"]
@@ -21,7 +20,6 @@ miranda = NodePath("Audio/Miranda")
 
 [node name="Music" type="AudioPlayer" parent="Audio"]
 restart = true
-stream = ExtResource("1_sxo7b")
 autoplay = true
 
 [node name="Miranda" type="AudioPlayer" parent="Audio"]
