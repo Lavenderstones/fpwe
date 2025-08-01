@@ -1,4 +1,4 @@
-use crate::{player::AudioPlayer, shift::Shift, assets};
+use crate::{assets, player::AudioPlayer, shift::Shift};
 use godot::{
     classes::{Label, ResourceLoader, Sprite2D, Texture2D},
     prelude::*,
@@ -42,28 +42,33 @@ impl Game {
     /// Update fields in [Game] that depend on the current [Shift].
     fn update(&mut self) {
         // set the music
-        self.music.as_mut().map(|player| {
-            player.bind_mut().play(&format!("shift/{}.ogg", self.shift_number));
-        });
+        if let Some(player) = self.music.as_mut() {
+            player
+                .bind_mut()
+                .play(&format!("shift/{}.ogg", self.shift_number));
+        }
 
         // set the page texture
         self.page.as_mut().map(|sprite| {
             ResourceLoader::singleton()
-                .load(&assets(&format!("pages/{}/{}.webp", self.shift_number, self.shift.index)))
+                .load(&assets(&format!(
+                    "pages/{}/{}.webp",
+                    self.shift_number, self.shift.index
+                )))
                 .and_then(|res| res.try_cast::<Texture2D>().ok())
                 .map(|texture| sprite.set_texture(&texture))
         });
 
         // set the page title
         let page = self.shift.page();
-        self.title.as_mut().map(|label| {
+        if let Some(label) = self.title.as_mut() {
             label.set_text(page.title);
-        });
+        }
 
         // set the page description
-        self.description.as_mut().map(|label| {
+        if let Some(label) = self.description.as_mut() {
             label.set_text(page.description);
-        });
+        }
     }
 
     fn next_page(&mut self) {

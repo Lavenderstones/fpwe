@@ -1,4 +1,4 @@
-use crate::{player::AudioPlayer};
+use crate::player::AudioPlayer;
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -25,6 +25,8 @@ impl Menu {
     /// Quit the game.
     #[func]
     fn quit_game(&self) {
-        self.base().get_tree().as_mut().map(|tree| tree.quit());
+        if let Some(tree) = self.base().get_tree().as_mut() {
+            tree.quit()
+        }
     }
 }

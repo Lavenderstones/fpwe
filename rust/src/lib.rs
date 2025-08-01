@@ -9,7 +9,7 @@ pub(crate) fn assets(path: &str) -> String {
     format!("res://assets/{}", path)
 }
 
-struct FPWE;
+struct Fpwe;
 
 #[gdextension]
-unsafe impl ExtensionLibrary for FPWE {}
+unsafe impl ExtensionLibrary for Fpwe {}

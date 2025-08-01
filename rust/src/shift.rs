@@ -1,7 +1,7 @@
-use std::collections::HashSet;
+use crate::shift::data::SHIFT1;
 use page::Page;
 use rand::seq::IndexedRandom;
-use crate::{shift::data::SHIFT1};
+use std::collections::HashSet;
 
 pub mod data;
 mod page;
