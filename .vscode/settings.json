@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        "rust/target": true,
+        "rust/.cargo": true,
+        "rust/*.lock": true,
+        
+        "godot/**/*.import": true,
+        "godot/.godot": true
+    }
+}
