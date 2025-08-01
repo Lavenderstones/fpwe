@@ -14,7 +14,7 @@ impl Menu {
         self.base()
             .get_tree()
             .as_mut()
-            .map(|tree| tree.change_scene_to_file("res://scenes/shift.tscn"));
+            .map(|tree| tree.change_scene_to_file("res://scenes/IntroCutscene.tscn"));
     }
 
     /// Quit the game.

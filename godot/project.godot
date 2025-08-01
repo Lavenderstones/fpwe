@@ -14,6 +14,8 @@ config/name="Fast Paced Working Environment"
 config/version="1.0.0"
 run/main_scene="uid://clkvxvmq6yoce"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 boot_splash/image="uid://l7puppqdk13j"
 
 [display]

@@ -7,7 +7,10 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in
       {
-        devShells.default = pkgs.mkShell { packages = [ pkgs.emscripten ]; };
+        devShells.default = pkgs.mkShell { packages = [
+          pkgs.emscripten 
+          pkgs.just
+        ]; };
       }
     );
 
