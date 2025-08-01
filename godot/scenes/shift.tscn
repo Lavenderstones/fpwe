@@ -1,27 +1,17 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="Texture2D" uid="uid://bgx4e547vjw7q" path="res://assets/pages/page1.jpg" id="1_uwrxv"]
+[ext_resource type="Texture2D" uid="uid://cbo2b062bjrwc" path="res://assets/pages/page1.webp" id="1_o7ulw"]
 
 [node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page_sprite")]
 score_label = NodePath("UI/Score")
 page_sprite = NodePath("Page")
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Page" type="Sprite2D" parent="."]
 position = Vector2(512, 217)
 scale = Vector2(0.416, 0.416)
-texture = ExtResource("1_uwrxv")
+texture = ExtResource("1_o7ulw")
 
 [node name="UI" type="Node" parent="."]
 

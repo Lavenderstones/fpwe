@@ -12,8 +12,8 @@ mod page;
 pub(crate) const SCENE_URL: &str = "res://scenes/shift.tscn";
 pub(crate) const SHIFT1: ShiftData<2> = ShiftData {
     pages: [
-        Page::new(true, 10, 100, "page1.jpg", "page 1", "woahg"),
-        Page::new(false, 100, 10, "page2.jpg", "page 2", "oh no"),
+        Page::new(true, 10, 100, "page1.webp", "page 1", "woahg"),
+        Page::new(false, 100, 10, "page2.webp", "page 2", "oh no"),
     ],
     music: "shift1.ogg",
 };

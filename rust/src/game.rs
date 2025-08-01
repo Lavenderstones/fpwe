@@ -38,21 +38,19 @@ impl Game {
         self.shift.next_page();
 
         // set the texture
-        if let Some(sprite) = self.page_sprite.as_mut() {
-            let texture = ResourceLoader::singleton()
+        self.page_sprite.as_mut().map(|sprite| {
+            ResourceLoader::singleton()
                 .load(&self.shift.page().asset())
-                .and_then(|res| res.try_cast::<Texture2D>().ok());
-            if let Some(texture) = texture {
-                sprite.set_texture(&texture);
-            }
-        }
+                .and_then(|res| res.try_cast::<Texture2D>().ok())
+                .map(|texture| sprite.set_texture(&texture))
+        });
     }
 
     fn update_score(&mut self, dx: isize) {
         self.score += dx;
-        if let Some(label) = self.score_label.as_mut() {
-            label.set_text(&format!("Score: {}", self.score));
-        }
+        self.score_label
+            .as_mut()
+            .map(|label| label.set_text(&format!("Score: {}", self.score)));
     }
 }
 
