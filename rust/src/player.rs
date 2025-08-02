@@ -1,7 +1,9 @@
 use godot::{
-    classes::{AudioStreamPlayer2D, IAudioStreamPlayer2D},
+    classes::{AudioStream, AudioStreamPlayer2D, IAudioStreamPlayer2D},
     prelude::*,
 };
+
+use crate::helpers::get_asset;
 
 #[derive(GodotClass)]
 #[class(init, base = AudioStreamPlayer2D)]
@@ -19,15 +21,19 @@ impl IAudioStreamPlayer2D for AudioPlayer {
         self.base()
             .signals()
             .finished()
-            .connect_other(self, Self::on_finish);
+            .connect_other(self, |player| {
+                if player.restart {
+                    player.base_mut().play();
+                }
+            });
     }
 }
 
 impl AudioPlayer {
-    /// Run when the current [AudioStream] finishes playing.
-    fn on_finish(&mut self) {
-        if self.restart {
-            self.base_mut().play();
-        }
+    pub(crate) fn play(&mut self, path: &str) {
+        let stream = get_asset::<AudioStream>(&format!("audio/{path}"));
+        self.base_mut().stop();
+        self.base_mut().set_stream(&stream);
+        self.base_mut().play();
     }
 }

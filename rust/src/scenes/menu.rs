@@ -1,6 +1,5 @@
+use crate::helpers::change_scene;
 use godot::prelude::*;
-
-use crate::change_scene;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]

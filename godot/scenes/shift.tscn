@@ -8,11 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="4_h662l"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="5_m03re"]
 
-[node name="Game" type="Game" node_paths=PackedStringArray("score_label", "page", "title", "description", "music", "miranda")]
-score_label = NodePath("UI/Score")
-page = NodePath("UI/Page")
-title = NodePath("UI/Title")
-description = NodePath("UI/Description")
+[node name="Shift" type="Shift" node_paths=PackedStringArray("credits", "music", "miranda")]
+credits = NodePath("UI/Credits/Value")
 music = NodePath("Audio/Music")
 miranda = NodePath("Audio/Miranda")
 
@@ -44,12 +41,9 @@ position = Vector2(249, 147)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_5i7ea")
 
-[node name="Page" type="Sprite2D" parent="UI"]
-position = Vector2(653, 303)
-scale = Vector2(4, 4)
-texture = ExtResource("2_sxo7b")
+[node name="Page" type="Node" parent="UI"]
 
-[node name="Title" type="Label" parent="UI"]
+[node name="Title" type="Label" parent="UI/Page"]
 offset_left = 24.0
 offset_top = 48.0
 offset_right = 471.0
@@ -60,7 +54,7 @@ theme_override_font_sizes/font_size = 32
 text = "Title"
 autowrap_mode = 3
 
-[node name="Description" type="Label" parent="UI"]
+[node name="Description" type="Label" parent="UI/Page"]
 offset_left = 24.0
 offset_top = 143.0
 offset_right = 474.0
@@ -71,33 +65,14 @@ theme_override_font_sizes/font_size = 18
 text = "Description"
 autowrap_mode = 3
 
-[node name="Score" type="Label" parent="UI"]
-offset_left = 986.0
-offset_top = 102.0
-offset_right = 1214.0
-offset_bottom = 183.0
-theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
-theme_override_fonts/font = ExtResource("5_m03re")
-theme_override_font_sizes/font_size = 72
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Texture" type="Sprite2D" parent="UI/Page"]
+position = Vector2(653, 303)
+scale = Vector2(4, 4)
+texture = ExtResource("2_sxo7b")
 
-[node name="TruthCredits" type="Label" parent="UI"]
-offset_left = 964.0
-offset_top = 42.0
-offset_right = 1224.0
-offset_bottom = 96.0
-theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
-theme_override_fonts/font = ExtResource("5_m03re")
-theme_override_font_sizes/font_size = 34
-text = "TRUTH CREDITS"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Buttons" type="Node" parent="UI/Page"]
 
-[node name="Buttons" type="Node" parent="UI"]
-
-[node name="Accept" type="TextureButton" parent="UI/Buttons"]
+[node name="Accept" type="TextureButton" parent="UI/Page/Buttons"]
 offset_left = 162.0
 offset_top = 520.0
 offset_right = 409.0
@@ -107,7 +82,7 @@ texture_normal = ExtResource("3_cajfp")
 texture_hover = ExtResource("4_h662l")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="UI/Buttons/Accept"]
+[node name="Label" type="Label" parent="UI/Page/Buttons/Accept"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.081
@@ -122,7 +97,7 @@ text = "Accept"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Unaccept" type="TextureButton" parent="UI/Buttons"]
+[node name="Unaccept" type="TextureButton" parent="UI/Page/Buttons"]
 offset_left = 883.0
 offset_top = 525.0
 offset_right = 1125.0
@@ -132,7 +107,7 @@ texture_normal = ExtResource("3_cajfp")
 texture_hover = ExtResource("4_h662l")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="UI/Buttons/Unaccept"]
+[node name="Label" type="Label" parent="UI/Page/Buttons/Unaccept"]
 layout_mode = 0
 offset_left = 65.0
 offset_top = 75.0
@@ -145,5 +120,28 @@ text = "Unaccept"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="UI/Buttons/Accept" to="." method="handle_choice" binds= [true]]
-[connection signal="pressed" from="UI/Buttons/Unaccept" to="." method="handle_choice" binds= [false]]
+[node name="Credits" type="Node" parent="UI"]
+
+[node name="Title" type="Label" parent="UI/Credits"]
+offset_left = 964.0
+offset_top = 42.0
+offset_right = 1224.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
+theme_override_fonts/font = ExtResource("5_m03re")
+theme_override_font_sizes/font_size = 34
+text = "TRUTH CREDITS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Value" type="Label" parent="UI/Credits"]
+offset_left = 986.0
+offset_top = 102.0
+offset_right = 1214.0
+offset_bottom = 183.0
+theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
+theme_override_fonts/font = ExtResource("5_m03re")
+theme_override_font_sizes/font_size = 72
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
