@@ -6,8 +6,8 @@ pub(crate) struct Page {
     pub(crate) description: &'static str,
     pub(crate) accept: bool,
 
-    pub(crate) bonus: isize,
-    pub(crate) penalty: isize,
+    pub(crate) bonus: i32,
+    pub(crate) penalty: i32,
 }
 
 impl Page {

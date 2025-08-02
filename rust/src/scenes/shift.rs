@@ -9,6 +9,7 @@ use godot::{
     classes::{Label, Sprite2D, Texture2D},
     prelude::*,
 };
+use rand::seq::IndexedRandom;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
@@ -40,12 +41,7 @@ struct Shift {
 #[godot_api]
 impl INode for Shift {
     fn ready(&mut self) {
-        // select a page
-        let pages = Page::for_sanity(self.sanity);
-        self.current = rand::random_range(0..pages.len());
-        self.seen.insert(self.current);
-        // refresh the screen
-        self.refresh();
+        self.next_page();
     }
 }
 
@@ -53,6 +49,23 @@ impl Shift {
     fn current_page(&self) -> Page {
         let pages = Page::for_sanity(self.sanity);
         pages[self.current].clone()
+    }
+
+    fn next_page(&mut self) {
+        let pages = Page::for_sanity(self.sanity);
+        let unseen: Vec<usize> = (0..pages.len())
+            .filter(|i| !self.seen.contains(i))
+            .collect();
+
+        if !unseen.is_empty() {
+            let &index = unseen
+                .choose(&mut rand::rng())
+                .expect("should have unseen pages");
+            self.seen.insert(index);
+            self.current = index;
+        }
+
+        self.refresh();
     }
 
     fn refresh(&mut self) {
@@ -88,5 +101,32 @@ impl Shift {
                 get_asset::<Texture2D>(&format!("pages/{}/{}.webp", self.sanity, self.current));
             sprite.set_texture(&texture);
         });
+    }
+}
+
+#[godot_api]
+impl Shift {
+    #[func]
+    fn handle_choice(&mut self, accept: bool) {
+        // check whether the answer is correct
+        let page = self.current_page();
+        let correct = page.accept == accept;
+        let credit_delta = if correct { page.bonus } else { -page.penalty };
+
+        // update the score accordingly
+        let mut state = get_state(&self.base());
+        state.call("update_credits", &[Variant::from(credit_delta)]);
+
+        // praise or scold the player
+        access(&mut self.miranda, |player| {
+            let max = if self.sanity == 2 && !correct { 5 } else { 4 };
+            let index = rand::random_range(0..=(max as usize));
+            let dir = if correct { "praise" } else { "scold" };
+            player
+                .bind_mut()
+                .play(&format!("miranda/{dir}/{}/{index}.ogg", self.sanity));
+        });
+
+        self.next_page();
     }
 }

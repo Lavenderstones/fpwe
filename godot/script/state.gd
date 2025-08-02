@@ -14,3 +14,6 @@ func get_credits() -> int:
 
 func get_sanity() -> Sanity:
 	return sanity
+
+func update_credits(amount: int) -> void:
+	credits += amount
