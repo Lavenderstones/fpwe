@@ -19,7 +19,7 @@ impl Page {
     /// and the second element is the score change (bonus or penalty).
     pub(crate) fn check(&self, answer: bool) -> (bool, isize) {
         let correct = self.accept == answer;
-        let dx = if correct { self.bonus } else { self.penalty };
+        let dx = if correct { self.bonus } else { -self.penalty };
         (correct, dx)
     }
 }
