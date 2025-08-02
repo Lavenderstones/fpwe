@@ -1,15 +1,34 @@
-use godot::{classes::Label, prelude::*};
+use std::collections::HashSet;
 
-use crate::{helpers::get_state, player::AudioPlayer};
+use crate::{
+    helpers::{access, get_asset, get_state},
+    page::Page,
+    player::AudioPlayer,
+};
+use godot::{
+    classes::{Label, Sprite2D, Texture2D},
+    prelude::*,
+};
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
 struct Shift {
     base: Base<Node>,
 
-    // -- labels --
+    // -- pages --
+    sanity: u8,
+    current: usize,
+    seen: HashSet<usize>,
+
+    // -- nodes --
     #[export]
     credits: Option<Gd<Label>>,
+    #[export]
+    title: Option<Gd<Label>>,
+    #[export]
+    description: Option<Gd<Label>>,
+    #[export]
+    page: Option<Gd<Sprite2D>>,
 
     // -- audio --
     #[export]
@@ -21,26 +40,53 @@ struct Shift {
 #[godot_api]
 impl INode for Shift {
     fn ready(&mut self) {
-        self.update();
+        // select a page
+        let pages = Page::for_sanity(self.sanity);
+        self.current = rand::random_range(0..pages.len());
+        self.seen.insert(self.current);
+        // refresh the screen
+        self.refresh();
     }
 }
 
 impl Shift {
-    /// Update labels in the scene.
-    fn update(&mut self) {
+    fn current_page(&self) -> Page {
+        let pages = Page::for_sanity(self.sanity);
+        pages[self.current].clone()
+    }
+
+    fn refresh(&mut self) {
         // --- global state ---
         let mut state = get_state(&self.base());
+        self.sanity = state.call("get_sanity", &[]).to::<u8>();
 
         // music
-        self.music.as_mut().map(|player| {
-            let sanity = state.call("get_sanity", &[]).to::<i32>();
-            player.bind_mut().play(&format!("shift/{sanity}.ogg"));
+        access(&mut self.music, |player| {
+            player
+                .bind_mut()
+                .play(&format!("shift/{}.ogg", self.sanity));
         });
 
         // credits
-        self.credits.as_mut().map(|label| {
+        access(&mut self.credits, |label| {
             let credits = state.call("get_credits", &[]).to::<i32>();
             label.set_text(&credits.to_string());
+        });
+
+        // -- page --
+        let page = self.current_page();
+
+        access(&mut self.title, |label| {
+            label.set_text(page.title);
+        });
+        access(&mut self.description, |label| {
+            label.set_text(page.description);
+        });
+
+        access(&mut self.page, |sprite| {
+            let texture =
+                get_asset::<Texture2D>(&format!("pages/{}/{}.webp", self.sanity, self.current));
+            sprite.set_texture(&texture);
         });
     }
 }

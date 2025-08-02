@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="4_h662l"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="5_m03re"]
 
-[node name="Shift" type="Shift" node_paths=PackedStringArray("credits", "music", "miranda")]
+[node name="Shift" type="Shift" node_paths=PackedStringArray("credits", "title", "description", "page", "music", "miranda")]
 credits = NodePath("UI/Credits/Value")
+title = NodePath("UI/Page/Title")
+description = NodePath("UI/Page/Description")
+page = NodePath("UI/Page/Texture")
 music = NodePath("Audio/Music")
 miranda = NodePath("Audio/Miranda")
 
@@ -35,7 +38,7 @@ position = Vector2(643, 359)
 scale = Vector2(4, 4)
 texture = ExtResource("3_5i7ea")
 
-[node name="InfoBox" type="Sprite2D" parent="UI"]
+[node name="Info Box" type="Sprite2D" parent="UI"]
 z_index = -1
 position = Vector2(249, 147)
 scale = Vector2(1.5, 1.5)

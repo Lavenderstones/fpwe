@@ -1,3 +1,5 @@
+use std::marker::Destruct;
+
 use godot::{
     classes::{Engine, ResourceLoader},
     prelude::*,
@@ -29,4 +31,11 @@ pub(crate) fn change_scene(node: &Node, scene: &str) {
     node.get_tree()
         .as_mut()
         .map(|tree| tree.change_scene_to_file(&get_path(&format!("scenes/{scene}.tscn"))));
+}
+
+pub(crate) fn access<T: GodotClass, U, F>(node: &mut Option<Gd<T>>, mapper: F) -> Option<U>
+where
+    F: FnOnce(&mut Gd<T>) -> U,
+{
+    node.as_mut().map(mapper)
 }
