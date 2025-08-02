@@ -24,6 +24,8 @@ impl IAudioStreamPlayer2D for AudioPlayer {
             .connect_other(self, |player| {
                 if player.restart {
                     player.base_mut().play();
+                } else {
+                    player.signals().done().emit();
                 }
             });
     }
@@ -36,4 +38,10 @@ impl AudioPlayer {
         self.base_mut().set_stream(&stream);
         self.base_mut().play();
     }
+}
+
+#[godot_api]
+impl AudioPlayer {
+    #[signal]
+    pub(crate) fn done();
 }

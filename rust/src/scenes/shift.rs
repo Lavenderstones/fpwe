@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use crate::{
-    helpers::{access, get_asset, get_state},
+    helpers::{access, change_scene, get_asset, get_state},
     page::Page,
     player::AudioPlayer,
 };
@@ -57,7 +57,9 @@ impl Shift {
             .filter(|i| !self.seen.contains(i))
             .collect();
 
-        if !unseen.is_empty() {
+        if unseen.is_empty() {
+            change_scene(&self.base(), "intro");
+        } else {
             let &index = unseen
                 .choose(&mut rand::rng())
                 .expect("should have unseen pages");

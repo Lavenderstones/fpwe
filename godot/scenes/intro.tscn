@@ -1,6 +1,5 @@
-[gd_scene load_steps=554 format=3 uid="uid://dqjkq5sqex2q8"]
+[gd_scene load_steps=553 format=3 uid="uid://dqjkq5sqex2q8"]
 
-[ext_resource type="Script" uid="uid://822tun8p7dlv" path="res://gdscript/intro_cutscene.gd" id="1_yjqpq"]
 [ext_resource type="Texture2D" uid="uid://ttobenx1dtar" path="res://assets/intro-spritesheet.png" id="2_4bx60"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_872o4"]
@@ -3861,42 +3860,13 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Intro" type="Node2D"]
-script = ExtResource("1_yjqpq")
+[node name="Intro" type="Intro" node_paths=PackedStringArray("background", "audio")]
+background = NodePath("Background")
+audio = NodePath("Audio")
 
-[node name="GIF" type="AnimatedSprite2D" parent="."]
+[node name="Background" type="AnimatedSprite2D" parent="."]
 position = Vector2(642, 361)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_8pu6a")
 
-[node name="AudioMain" type="AudioStreamPlayer2D" parent="."]
-volume_db = 3.748
-
-[node name="EmployeeNameReadoutTimer" type="Timer" parent="."]
-wait_time = 1.4
-one_shot = true
-autostart = true
-
-[node name="AuxillaryAudio" type="AudioStreamPlayer2D" parent="."]
-
-[node name="CompanyTimer1" type="Timer" parent="."]
-wait_time = 4.4
-one_shot = true
-autostart = true
-
-[node name="CompanyTimer2" type="Timer" parent="."]
-wait_time = 7.7
-one_shot = true
-autostart = true
-
-[node name="CompanyTimer3" type="Timer" parent="."]
-wait_time = 42.0
-one_shot = true
-autostart = true
-
-[connection signal="animation_finished" from="GIF" to="." method="_on_animated_sprite_2d_animation_finished"]
-[connection signal="finished" from="AudioMain" to="." method="_on_audio_main_finished"]
-[connection signal="timeout" from="EmployeeNameReadoutTimer" to="." method="_on_employee_name_readout_timer_timeout"]
-[connection signal="timeout" from="CompanyTimer1" to="." method="_on_company_timer_timeout"]
-[connection signal="timeout" from="CompanyTimer2" to="." method="_on_company_timer_timeout"]
-[connection signal="timeout" from="CompanyTimer3" to="." method="_on_company_timer_timeout"]
+[node name="Audio" type="AudioPlayer" parent="."]

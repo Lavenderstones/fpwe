@@ -1,11 +1,6 @@
-use std::marker::Destruct;
+use godot::{classes::ResourceLoader, prelude::*};
 
-use godot::{
-    classes::{Engine, ResourceLoader},
-    prelude::*,
-};
-
-fn get_path(path: &str) -> String {
+pub(crate) fn get_path(path: &str) -> String {
     format!("res://{}", path)
 }
 

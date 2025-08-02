@@ -1,5 +1,3 @@
-#![feature(const_destruct)]
-
 use godot::prelude::*;
 
 pub(crate) mod helpers;
