@@ -3,6 +3,11 @@ use crate::{
     player::AudioPlayer,
 };
 use godot::{classes::AnimatedSprite2D, prelude::*};
+#[cfg(debug_assertions)]
+use godot::{
+    classes::{InputEvent, InputEventKey},
+    global::Key,
+};
 
 const PLAYER_OPTIONS: [u8; 3] = [0, 1, 1];
 const LAST_SNIPPET: u8 = 4;
@@ -43,6 +48,24 @@ impl INode for Intro {
                 format!("miranda/company/{company}.ogg"),
             );
         });
+    }
+
+    #[cfg(debug_assertions)]
+    fn input(&mut self, event: Gd<InputEvent>) {
+        // skip the intro in dev builds
+        if let Ok(key) = event.try_cast::<InputEventKey>()
+            && key.is_pressed()
+        {
+            match key.get_keycode() {
+                Key::SPACE | Key::ENTER => {
+                    // skip the intro
+                    if let Some(mut tree) = self.base().get_tree() {
+                        tree.change_scene_to_file(&get_path("scenes/shift.tscn"));
+                    }
+                }
+                _ => {}
+            }
+        }
     }
 }
 
