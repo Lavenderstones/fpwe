@@ -1,6 +1,5 @@
-use crate::assets;
 use godot::{
-    classes::{AudioStream, AudioStreamPlayer2D, IAudioStreamPlayer2D, ResourceLoader},
+    classes::{AudioStreamPlayer2D, IAudioStreamPlayer2D},
     prelude::*,
 };
 
@@ -30,20 +29,5 @@ impl AudioPlayer {
         if self.restart {
             self.base_mut().play();
         }
-    }
-
-    /// Load an [AudioStream] from the given path.
-    fn load(path: &str) -> Gd<AudioStream> {
-        ResourceLoader::singleton()
-            .load(&assets(&format!("audio/{}", path)))
-            .and_then(|res| res.try_cast::<AudioStream>().ok())
-            .expect("audio must be valid")
-    }
-
-    /// Play the [AudioStream] from the given path on the [AudioPlayer].
-    pub(crate) fn play(&mut self, path: &str) {
-        self.base_mut().stop();
-        self.base_mut().set_stream(&Self::load(path));
-        self.base_mut().play();
     }
 }

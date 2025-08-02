@@ -4,5 +4,6 @@
         
         "godot/**/*.import": true,
         "godot/.godot": true
-    }
+    },
+    "godotTools.editorPath.godot4": "c:\\_PATH\\godot4.exe"
 }
