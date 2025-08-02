@@ -1,9 +1,8 @@
+use crate::helpers::get_asset;
 use godot::{
     classes::{AudioStream, AudioStreamPlayer2D, IAudioStreamPlayer2D},
     prelude::*,
 };
-
-use crate::helpers::get_asset;
 
 #[derive(GodotClass)]
 #[class(init, base = AudioStreamPlayer2D)]

@@ -1,9 +1,10 @@
 use crate::{
-    helpers::{access, get_path},
+    helpers::{access, get_path, get_state},
     player::AudioPlayer,
 };
 use godot::{classes::AnimatedSprite2D, prelude::*};
 
+const PLAYER_OPTIONS: [u8; 3] = [0, 1, 1];
 const LAST_SNIPPET: u8 = 4;
 
 #[derive(GodotClass)]
@@ -24,27 +25,52 @@ impl INode for Intro {
             sprite.play();
         });
 
+        // choose a random name
+        let mut state = get_state(&self.base());
+        let sanity = state.call("get_sanity", &[]).to::<u8>();
+        let max = PLAYER_OPTIONS[usize::from(sanity)];
+        let name = rand::random_range(0..=max);
+
+        // get the company
+        let company = state.call("get_company", &[]).to::<u8>();
+
+        // start audio
         access(&mut self.audio, |player| {
-            Intro::play_snippet(&mut player.bind_mut(), 0);
+            play(
+                &mut player.bind_mut(),
+                0,
+                format!("miranda/employee/{sanity}/{name}.ogg"),
+                format!("miranda/company/{company}.ogg"),
+            );
         });
     }
 }
 
-impl Intro {
-    fn play_snippet(player: &mut AudioPlayer, snippet: u8) {
-        if snippet > LAST_SNIPPET
-            && let Some(mut tree) = player.base().get_tree()
-        {
-            tree.change_scene_to_file(&get_path("scenes/shift.tscn"));
+fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
+    if intro > LAST_SNIPPET
+        && let Some(mut tree) = player.base().get_tree()
+    {
+        tree.change_scene_to_file(&get_path("scenes/shift.tscn"));
+    }
+
+    // play the intro audio
+    player.play(&format!("miranda/intro/{}.ogg", intro));
+
+    // at the end of the audio, play the next custom audio
+    player.signals().done().connect_self(move |player| {
+        match intro {
+            0 => player.play(&name),
+            _ => player.play(&company),
         }
 
-        // play the intro audio
-        player.play(&format!("miranda/intro/{}.ogg", snippet));
-
         // at the end of the audio, play the next snippet
-        let conn = player.signals().done().connect_self(move |player| {
-            Intro::play_snippet(player, snippet + 1);
-        });
-        conn.disconnect();
-    }
+        {
+            let name = name.clone();
+            let company = company.clone();
+
+            player.signals().done().connect_self(move |player| {
+                play(player, intro + 1, name.clone(), company.clone());
+            });
+        }
+    });
 }
