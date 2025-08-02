@@ -23,6 +23,7 @@ boot_splash/image="uid://l7puppqdk13j"
 Global="*res://gdscript/global.gd"
 Employee="*res://gdscript/employee.gd"
 Sanity="*res://gdscript/sanity.gd"
+Company="*res://gdscript/company.gd"
 
 [display]
 
