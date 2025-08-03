@@ -14,14 +14,6 @@ where
         .unwrap_or_else(|| panic!("Failed to load asset: {}", path))
 }
 
-pub(crate) fn get_state(node: &Node) -> Gd<Node> {
-    node.get_tree()
-        .unwrap()
-        .get_root()
-        .unwrap()
-        .get_node_as::<Node>("State")
-}
-
 pub(crate) fn change_scene(node: &Node, scene: &str) {
     node.get_tree()
         .as_mut()

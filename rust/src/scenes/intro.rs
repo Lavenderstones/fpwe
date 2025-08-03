@@ -1,6 +1,7 @@
 use crate::{
-    helpers::{access, get_path, get_state},
+    helpers::{access, get_path},
     player::AudioPlayer,
+    state::State,
 };
 use godot::{classes::AnimatedSprite2D, prelude::*};
 #[cfg(debug_assertions)]
@@ -31,13 +32,10 @@ impl INode for Intro {
         });
 
         // choose a random name
-        let mut state = get_state(&self.base());
-        let sanity = state.call("get_sanity", &[]).to::<u8>();
-        let max = PLAYER_OPTIONS[usize::from(sanity)];
+        let state = State::get(&self.base());
+        let sanity = state.bind().sanity;
+        let max = PLAYER_OPTIONS[sanity as usize];
         let name = rand::random_range(0..=max);
-
-        // get the company
-        let company = state.call("get_company", &[]).to::<u8>();
 
         // start audio
         access(&mut self.audio, |player| {
@@ -45,7 +43,7 @@ impl INode for Intro {
                 &mut player.bind_mut(),
                 0,
                 format!("employee/{sanity}/{name}"),
-                format!("company/{company}"),
+                format!("company/{sanity}"),
             );
         });
     }

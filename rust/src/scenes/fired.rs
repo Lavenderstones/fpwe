@@ -1,6 +1,7 @@
 use crate::{
-    helpers::{access, change_scene, get_state},
+    helpers::{access, change_scene},
     player::AudioPlayer,
+    state::State,
 };
 use godot::{classes::AnimatedSprite2D, prelude::*};
 
@@ -26,14 +27,14 @@ impl INode for Fired {
         });
 
         // play a random fired audio
-        let mut state = get_state(&self.base());
+        let mut state = State::get(&self.base());
         access(&mut self.player, |player| {
             let i = rand::random_range(0..FIRED_SOUND_COUNT);
-            state.call("update_fired_seen", &[Variant::from(i)]);
+             state.bind_mut().fired_seen.insert(i);
             player.bind_mut().play(&format!("fired/{i}"));
 
             player.signals().done().connect_self(|player| {
-                change_scene(&player.base(), "shift");
+                change_scene(&player.base(), "intro");
             });
         });
     }

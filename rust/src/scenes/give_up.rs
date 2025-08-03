@@ -1,4 +1,7 @@
-use crate::{helpers::{access, change_scene}, player::AudioPlayer};
+use crate::{
+    helpers::{access, change_scene},
+    player::AudioPlayer,
+};
 use godot::{classes::TextureButton, prelude::*};
 use rand::random;
 
@@ -8,7 +11,7 @@ struct GiveUp {
     base: Base<Node>,
 
     #[export]
-    sfx: Option<Gd<AudioPlayer>>,    
+    sfx: Option<Gd<AudioPlayer>>,
     #[export]
     no: Option<Gd<TextureButton>>,
 }
