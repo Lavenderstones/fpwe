@@ -1,3 +1,73 @@
-[gd_scene format=3 uid="uid://frpyl8c4p54r"]
+[gd_scene load_steps=4 format=3 uid="uid://frpyl8c4p54r"]
 
-[node name="Give-up" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.webp" id="1_nhvmf"]
+[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="2_306ct"]
+[ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="3_yk05q"]
+
+[node name="Give Up" type="GiveUp" node_paths=PackedStringArray("sfx", "no")]
+sfx = NodePath("SFX")
+no = NodePath("Buttons/Unaccept")
+
+[node name="SFX" type="AudioPlayer" parent="."]
+
+[node name="GIVE UP" type="Label" parent="."]
+offset_top = 78.0
+offset_right = 1266.0
+offset_bottom = 222.0
+theme_override_fonts/font = ExtResource("3_yk05q")
+theme_override_font_sizes/font_size = 128
+text = "GIVE UP."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Buttons" type="Node" parent="."]
+
+[node name="Accept" type="TextureButton" parent="Buttons"]
+offset_left = 162.0
+offset_top = 456.0
+offset_right = 409.0
+offset_bottom = 629.0
+action_mode = 0
+texture_normal = ExtResource("1_nhvmf")
+texture_hover = ExtResource("2_306ct")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Buttons/Accept"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.081
+offset_left = 6.0
+offset_right = 225.993
+offset_bottom = 168.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("3_yk05q")
+theme_override_font_sizes/font_size = 32
+text = "Accept"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Unaccept" type="TextureButton" parent="Buttons"]
+offset_left = 883.0
+offset_top = 461.0
+offset_right = 1125.0
+offset_bottom = 631.0
+action_mode = 0
+texture_normal = ExtResource("1_nhvmf")
+texture_hover = ExtResource("2_306ct")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Buttons/Unaccept"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 3.0
+offset_right = 237.0
+offset_bottom = 163.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("3_yk05q")
+theme_override_font_sizes/font_size = 32
+text = "Unaccept"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Buttons/Accept" to="." method="handle_button" binds= [true]]
+[connection signal="pressed" from="Buttons/Unaccept" to="." method="handle_button" binds= [false]]

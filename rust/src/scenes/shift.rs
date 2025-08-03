@@ -66,7 +66,7 @@ impl Shift {
             let mut state = get_state(&self.base());
 
             let scene = if self.sanity == 2 {
-                "credits"
+                "give-up"
             } else {
                 state.call("next_sanity", &[]);
                 "fired"
