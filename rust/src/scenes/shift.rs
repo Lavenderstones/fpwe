@@ -1,6 +1,6 @@
 use crate::{
     Page,
-    helpers::{access, get_path, animate_position, change_scene, get_asset},
+    helpers::{access, get_path, animate_position, get_asset},
     player::AudioPlayer,
     state::{Sanity, State},
 };

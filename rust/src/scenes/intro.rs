@@ -65,7 +65,7 @@ impl INode for Intro {
 }
 
 fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
-    if intro > LAST_SNIPPET {
+    if intro >= LAST_SNIPPET {
         return change_scene(&player.base(), "shift", false);
     }
 
