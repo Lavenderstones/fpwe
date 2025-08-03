@@ -29,16 +29,16 @@ jobs:
       - name: Download Godot and export templates
         if: steps.godot-cache.outputs.cache-hit != 'true'
         run: |
-          wget https://github.com/godotengine/godot-builds/releases/download/Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64.zip
-          wget https://github.com/godotengine/godot-builds/releases/download/Godot_v${{ vars.GODOT_VERSION }}_export_templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.${{ vars.RELEASE_NAME || 'stable' }}
-          unzip Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_linux.x86_64.zip
-          mv Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_linux.x86_64 godot-headless
+          wget -q https://github.com/godotengine/godot-builds/releases/download/${{ vars.GODOT_VERSION }}/Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64.zip
+          wget -q https://github.com/godotengine/godot-builds/releases/download/${{ vars.GODOT_VERSION }}/Godot_v${{ vars.GODOT_VERSION }}_export_templates.tpz
+          unzip Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64.zip
+          mv Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64 godot-headless
           chmod +x godot-headless
-          unzip Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_export_templates.tpz -d template_temp
-          cp -r template_temp/templates/* ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.${{ vars.RELEASE_NAME || 'stable' }}/
-          rm -rf template_temp
-          rm -f Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_export_templates.tpz Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_linux.x86_64.zip
+          unzip Godot_v${{ vars.GODOT_VERSION }}_export_templates.tpz -d template_temp
+          GODOT_TEMPLATE_VERSION="${{ vars.GODOT_VERSION }}"
+          GODOT_TEMPLATE_VERSION="${GODOT_TEMPLATE_VERSION//-/.}"
+          mkdir -p ~/.local/share/godot/export_templates/$GODOT_TEMPLATE_VERSION
+          cp -r template_temp/templates/* ~/.local/share/godot/export_templates/$GODOT_TEMPLATE_VERSION/
 
   export-game:
     name: Export ${{ matrix.preset.name }}
