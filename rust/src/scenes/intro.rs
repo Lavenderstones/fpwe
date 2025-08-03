@@ -1,13 +1,12 @@
 use crate::{
     helpers::{access, get_path},
     player::AudioPlayer,
-    state::State,
+    state::{State, Sanity},
 };
-use godot::{classes::AnimatedSprite2D, prelude::*};
-#[cfg(debug_assertions)]
 use godot::{
-    classes::{InputEvent, InputEventKey},
+    classes::{AnimatedSprite2D, InputEvent, InputEventKey},
     global::Key,
+    prelude::*,
 };
 
 const PLAYER_OPTIONS: [u8; 3] = [0, 1, 1];
@@ -15,7 +14,7 @@ const LAST_SNIPPET: u8 = 4;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
-pub struct Intro {
+struct Intro {
     base: Base<Node>,
     #[export]
     background: Option<Gd<AnimatedSprite2D>>,
@@ -48,11 +47,11 @@ impl INode for Intro {
         });
     }
 
-    #[cfg(debug_assertions)]
     fn input(&mut self, event: Gd<InputEvent>) {
-        // skip the intro in dev builds
+        let state = State::get(&self.base());
         if let Ok(key) = event.try_cast::<InputEventKey>()
             && key.is_pressed()
+            && state.bind().sanity != Sanity::Normal
         {
             match key.get_keycode() {
                 Key::SPACE | Key::ENTER => {
@@ -67,17 +66,27 @@ impl INode for Intro {
     }
 }
 
+fn shift(player: &mut AudioPlayer) {
+    player
+        .base()
+        .get_tree()
+        .as_mut()
+        .map(|tree| tree.change_scene_to_file(&get_path("scenes/shift.tscn")));
+}
+
 fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
-    if intro > LAST_SNIPPET
-        && let Some(mut tree) = player.base().get_tree()
-    {
-        tree.change_scene_to_file(&get_path("scenes/shift.tscn"));
+    if intro > LAST_SNIPPET {
+        return shift(player);
     }
 
     // play the intro audio
     player.play(&format!("intro/{}", intro));
 
     // at the end of the audio, play the next custom audio
+    if intro == LAST_SNIPPET {
+        return shift(player);
+    }
+
     player.signals().done().connect_self(move |player| {
         match intro {
             0 => player.play(&name),

@@ -15,7 +15,6 @@ pub(crate) struct Page {
     pub(crate) penalty: isize,
 }
 
-
 struct Fpwe;
 
 #[gdextension]

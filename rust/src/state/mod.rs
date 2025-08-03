@@ -1,6 +1,6 @@
-use std::{collections::HashSet};
 use godot::prelude::*;
 pub(crate) use sanity::Sanity;
+use std::collections::HashSet;
 
 mod data;
 mod sanity;

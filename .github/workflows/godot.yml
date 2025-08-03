@@ -22,9 +22,10 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            godot-headless
+            godot
             ~/.local/share/godot/export_templates
           key: ${{ steps.godot-cache-key.outputs.key }}
+          lookup-only: true
 
       - name: Download Godot and export templates
         if: steps.godot-cache.outputs.cache-hit != 'true'
@@ -32,8 +33,8 @@ jobs:
           wget -q https://github.com/godotengine/godot-builds/releases/download/${{ vars.GODOT_VERSION }}/Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64.zip
           wget -q https://github.com/godotengine/godot-builds/releases/download/${{ vars.GODOT_VERSION }}/Godot_v${{ vars.GODOT_VERSION }}_export_templates.tpz
           unzip Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64.zip
-          mv Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64 godot-headless
-          chmod +x godot-headless
+          mv Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64 godot
+          chmod +x godot
           unzip Godot_v${{ vars.GODOT_VERSION }}_export_templates.tpz -d template_temp
           GODOT_TEMPLATE_VERSION="${{ vars.GODOT_VERSION }}"
           GODOT_TEMPLATE_VERSION="${GODOT_TEMPLATE_VERSION//-/.}"
@@ -92,7 +93,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: |
-            godot-headless
+            godot
             ~/.local/share/godot/export_templates
           key: ${{ needs.setup-godot.outputs.godot-cache-key }}
           fail-on-cache-miss: true
@@ -136,9 +137,9 @@ jobs:
         run: |
           cd godot
           if [[ "${{ matrix.preset.name }}" == *"Web"* ]]; then
-            ../godot-headless --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/index.html"
+            ../godot --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/index.html"
           else
-            ../godot-headless --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/${{ vars.EXPORT_NAME }}"
+            ../godot --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/${{ vars.EXPORT_NAME }}"
           fi
 
       - name: Create archive for upload

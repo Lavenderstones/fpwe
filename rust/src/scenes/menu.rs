@@ -3,7 +3,7 @@ use godot::prelude::*;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
-pub struct Menu {
+struct Menu {
     base: Base<Node>,
 }
 
@@ -16,6 +16,8 @@ impl Menu {
 
     #[func]
     fn quit_game(&self) {
-        self.base().get_tree().as_mut().map(|tree| tree.quit());
+        if let Some(tree) = self.base().get_tree().as_mut() {
+            tree.quit()
+        }
     }
 }

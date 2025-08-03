@@ -1,9 +1,10 @@
 use std::collections::HashSet;
 
 use crate::{
-    helpers::{access, change_scene, get_asset},
     Page,
-    player::AudioPlayer, state::{Sanity, State},
+    helpers::{access, change_scene, get_asset},
+    player::AudioPlayer,
+    state::{Sanity, State},
 };
 use godot::{
     classes::{Label, Sprite2D, Texture2D},
@@ -44,7 +45,7 @@ impl INode for Shift {
         self.next_page();
 
         // play the background music
-                access(&mut self.music, |player| {
+        access(&mut self.music, |player| {
             player.bind_mut().play(&format!("shift/{}", self.sanity));
         });
     }
@@ -123,7 +124,11 @@ impl Shift {
 
         // praise or scold the player
         access(&mut self.miranda, |player| {
-            let max = if self.sanity == Sanity::Hell && !correct { 5 } else { 4 };
+            let max = if self.sanity == Sanity::Hell && !correct {
+                5
+            } else {
+                4
+            };
             player.bind_mut().play(&format!(
                 "{}/{}/{}",
                 if correct { "praise" } else { "scold" },

@@ -14,11 +14,6 @@ windows.release.x86_64 = "res://../rust/target/x86_64-pc-windows-msvc/release/fp
 windows.debug.arm64 =    "res://../rust/target/aarch64-pc-windows-msvc/debug/fpwe.dll"
 windows.release.arm64 =  "res://../rust/target/aarch64-pc-windows-msvc/release/fpwe.dll"
 
-macos.debug =            "res://../rust/target/x86_64-apple-darwin/debug/libfpwe.dylib"
-macos.release =          "res://../rust/target/x86_64-apple-darwin/release/libfpwe.dylib"
-macos.debug.arm64 =      "res://../rust/target/aarch64-apple-darwin/debug/libfpwe.dylib"
-macos.release.arm64 =    "res://../rust/target/aarch64-apple-darwin/release/libfpwe.dylib"
-
 web.debug.threads.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/debug/fpwe.threads.wasm"
 web.release.threads.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/release/fpwe.threads.wasm"
 web.debug.wasm32 = "res://../rust/target/wasm32-unknown-emscripten/debug/fpwe.wasm"

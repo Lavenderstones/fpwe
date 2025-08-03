@@ -1,6 +1,6 @@
-use std::fmt;
-use crate::Page;
 use super::data;
+use crate::Page;
+use std::fmt;
 
 #[derive(Clone, Copy, Default, PartialEq, Eq)]
 pub(crate) enum Sanity {

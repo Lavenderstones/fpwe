@@ -122,6 +122,7 @@ jobs:
           ${{ matrix.features && format('cargo build --release --target {0} --features {1}', matrix.target, matrix.features) || format('cargo build --release --target {0}', matrix.target) }}
         env:
           CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: aarch64-linux-gnu-gcc
+          EMCC_FORCE_STDLIBS: ${{ matrix.target == 'wasm32-unknown-emscripten' && '1' || '' }}
 
       - name: Prepare build cache
         if: steps.cache-check.outputs.cache-hit != 'true'

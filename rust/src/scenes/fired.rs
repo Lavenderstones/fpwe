@@ -30,7 +30,7 @@ impl INode for Fired {
         let mut state = State::get(&self.base());
         access(&mut self.player, |player| {
             let i = rand::random_range(0..FIRED_SOUND_COUNT);
-             state.bind_mut().fired_seen.insert(i);
+            state.bind_mut().fired_seen.insert(i);
             player.bind_mut().play(&format!("fired/{i}"));
 
             player.signals().done().connect_self(|player| {
