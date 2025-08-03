@@ -24,7 +24,7 @@ impl State {
         self.sanity = match self.sanity {
             Sanity::Normal => Sanity::Tired,
             Sanity::Tired => Sanity::Hell,
-            Sanity::Hell => unreachable!(),
+            Sanity::Hell => Sanity::Hell,
         };
     }
 

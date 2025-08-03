@@ -1,6 +1,6 @@
 use crate::{
     Page,
-    helpers::{access, animate_position, change_scene, get_asset},
+    helpers::{access, get_path, animate_position, change_scene, get_asset},
     player::AudioPlayer,
     state::{Sanity, State},
 };
@@ -64,16 +64,14 @@ impl Shift {
         if unseen.is_empty() {
             let mut state = State::get(&self.base());
             let scene = if self.sanity == Sanity::Hell {
-                if cfg!(target_arch = "wasm32") {
-                    "credits"
-                } else {
-                    "give-up"
-                }
+                "give-up"
             } else {
                 state.bind_mut().next_shift();
                 "fired"
             };
-            change_scene(&self.base(), scene, self.sanity != Sanity::Hell);
+            self.base().get_tree().as_mut().map(|tree| {
+                tree.call_deferred("change_scene_to_file", &[get_path(&format!("scenes/{scene}.tscn")).to_variant()]);
+            });
         } else {
             let &index = unseen
                 .choose(&mut rand::rng())

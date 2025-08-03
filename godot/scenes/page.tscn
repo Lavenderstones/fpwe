@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://vwgxxll1defb"]
 
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="1_5g3ik"]
-[ext_resource type="Texture2D" uid="uid://bgn6lktql3pxg" path="res://assets/pages/normal/0.png" id="2_tecwl"]
-[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.png" id="3_kwiik"]
-[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.png" id="4_xsqhj"]
+[ext_resource type="Texture2D" uid="uid://eetjkpr2w3ft" path="res://assets/pages/normal/0.png" id="2_tecwl"]
+[ext_resource type="Texture2D" uid="uid://cmu4f5nnhxwbj" path="res://assets/ui/button/normal.png" id="3_kwiik"]
+[ext_resource type="Texture2D" uid="uid://b277tmf0g0qfd" path="res://assets/ui/button/hover.png" id="4_xsqhj"]
 
 [node name="Page" type="Node"]
 

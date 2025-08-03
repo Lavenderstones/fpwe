@@ -64,6 +64,7 @@ texture_hover = ExtResource("5_i6lef")
 stretch_mode = 4
 
 [node name="Label" type="Label" parent="UI/Buttons/Fullscreen"]
+layout_mode = 0
 offset_top = 8.0
 offset_right = 240.0
 offset_bottom = 168.0

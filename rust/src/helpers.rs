@@ -3,7 +3,7 @@ use godot::{
     prelude::*,
 };
 
-fn get_path(path: &str) -> String {
+pub(crate) fn get_path(path: &str) -> String {
     format!("res://{}", path)
 }
 
