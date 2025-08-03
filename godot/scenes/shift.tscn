@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://bkfomv4n04udt"]
 
-[ext_resource type="Texture2D" uid="uid://4nxqimngo0r6" path="res://assets/ui/screen.webp" id="2_m03re"]
-[ext_resource type="Texture2D" uid="uid://bgn6lktql3pxg" path="res://assets/pages/normal/0.webp" id="2_sxo7b"]
-[ext_resource type="Texture2D" uid="uid://cnc7cqfwtkgpq" path="res://assets/ui/Desk.webp" id="3_5i7ea"]
-[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.webp" id="3_cajfp"]
-[ext_resource type="Texture2D" uid="uid://c1fdoi1xkva4m" path="res://assets/ui/infobox.webp" id="4_5i7ea"]
-[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="4_h662l"]
+[ext_resource type="Texture2D" uid="uid://ctft65ix53sul" path="res://assets/ui/desk.png" id="1_m03re"]
+[ext_resource type="Texture2D" uid="uid://c7gcx4mlu8pad" path="res://assets/ui/screen.png" id="2_m03re"]
+[ext_resource type="Texture2D" uid="uid://eetjkpr2w3ft" path="res://assets/pages/normal/0.png" id="2_sxo7b"]
+[ext_resource type="Texture2D" uid="uid://cmu4f5nnhxwbj" path="res://assets/ui/button/normal.png" id="3_cajfp"]
+[ext_resource type="Texture2D" uid="uid://doq2q67karh3v" path="res://assets/ui/infobox.png" id="4_5i7ea"]
+[ext_resource type="Texture2D" uid="uid://b277tmf0g0qfd" path="res://assets/ui/button/hover.png" id="4_h662l"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="5_m03re"]
 
 [node name="Shift" type="Shift" node_paths=PackedStringArray("credits", "title", "description", "page", "music", "miranda")]
@@ -30,7 +30,7 @@ volume_db = 10.0
 z_index = -1
 position = Vector2(640, 360)
 scale = Vector2(4, 4)
-texture = ExtResource("3_5i7ea")
+texture = ExtResource("1_m03re")
 
 [node name="Screen" type="Sprite2D" parent="UI"]
 position = Vector2(1096, 110)

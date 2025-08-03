@@ -105,7 +105,7 @@ impl Shift {
         let shift_ref = self.base().clone();
         access(&mut self.page, |mut sprite| {
             let texture =
-                get_asset::<Texture2D>(&format!("pages/{}/{}.webp", self.sanity, self.current));
+                get_asset::<Texture2D>(&format!("pages/{}/{}.png", self.sanity, self.current));
             sprite.set_texture(&texture);
             let to = sprite.get_position();
             sprite.set_position(Vector2::new(to.x, -250.));

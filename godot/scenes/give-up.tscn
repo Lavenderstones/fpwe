@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://frpyl8c4p54r"]
 
-[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.webp" id="1_nhvmf"]
-[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="2_306ct"]
+[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.png" id="1_nhvmf"]
+[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.png" id="2_306ct"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="3_yk05q"]
 
 [node name="Give Up" type="GiveUp" node_paths=PackedStringArray("sfx", "no")]

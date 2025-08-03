@@ -1,8 +1,8 @@
 [gd_scene load_steps=67 format=3 uid="uid://dsttsu4jm0nyn"]
 
 [ext_resource type="AudioStream" uid="uid://o5mbllitrivb" path="res://assets/audio/credits.ogg" id="1_0bpdh"]
-[ext_resource type="Texture2D" uid="uid://df8yhy2y8hlji" path="res://assets/sprites/fired.png" id="2_0ctdu"]
-[ext_resource type="Texture2D" uid="uid://cnqe6dl0kdu1t" path="res://assets/sprites/MainWindow.png" id="3_2fbfq"]
+[ext_resource type="Texture2D" uid="uid://df8yhy2y8hlji" path="res://assets/sprites/anim/fired.png" id="2_0ctdu"]
+[ext_resource type="Texture2D" uid="uid://cnqe6dl0kdu1t" path="res://assets/sprites/credits.png" id="3_2fbfq"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="4_2fbfq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8gwij"]

@@ -17,6 +17,8 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/image="uid://l7puppqdk13j"
+config/icon="uid://l7puppqdk13j"
+config/windows_native_icon="res://assets/logo.ico"
 
 [autoload]
 
@@ -27,8 +29,7 @@ IndieBlueprintSceneTransitioner="*res://addons/ninetailsrabbit.indie_blueprint_s
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/resizable=false
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 
 [editor_plugins]
 

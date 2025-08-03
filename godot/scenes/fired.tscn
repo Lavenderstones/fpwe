@@ -1,6 +1,6 @@
 [gd_scene load_steps=65 format=3 uid="uid://bmgngwwwa6ps3"]
 
-[ext_resource type="Texture2D" uid="uid://df8yhy2y8hlji" path="res://assets/sprites/fired.png" id="1_651cc"]
+[ext_resource type="Texture2D" uid="uid://df8yhy2y8hlji" path="res://assets/sprites/anim/fired.png" id="1_651cc"]
 [ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="2_48c18"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_48c18"]
