@@ -11,7 +11,7 @@ struct Menu {
 impl Menu {
     #[func]
     fn start_game(&self) {
-        change_scene(&self.base(), "intro");
+        change_scene(&self.base(), "intro", true);
     }
 
     #[func]

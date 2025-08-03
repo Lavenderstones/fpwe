@@ -56,7 +56,7 @@ impl INode for Intro {
             match key.get_keycode() {
                 Key::SPACE | Key::ENTER => {
                     // skip the intro
-                    change_scene(&self.base(), "shift");
+                    change_scene(&self.base(), "shift", false);
                 }
                 _ => {}
             }
@@ -66,7 +66,7 @@ impl INode for Intro {
 
 fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
     if intro > LAST_SNIPPET {
-        return change_scene(&player.base(), "shift");
+        return change_scene(&player.base(), "shift", true);
     }
 
     // play the intro audio
@@ -74,7 +74,7 @@ fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
 
     // at the end of the audio, play the next custom audio
     if intro == LAST_SNIPPET {
-        return change_scene(&player.base(), "shift");
+        return change_scene(&player.base(), "shift", true);
     }
 
     player.signals().done().connect_self(move |player| {

@@ -41,7 +41,7 @@ impl INode for Credits {
                     let mut state = State::get(&base);
                     state.bind_mut().reset();
                     // go to main menu
-                    change_scene(&base, "menu");
+                    change_scene(&base, "menu", true);
                 });
                 tween.play()
             });

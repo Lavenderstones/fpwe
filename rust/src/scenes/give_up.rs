@@ -21,7 +21,7 @@ impl GiveUp {
     #[func]
     fn handle_button(&mut self, yes: bool) {
         if yes {
-            change_scene(&self.base(), "credits");
+            change_scene(&self.base(), "credits", true);
         } else {
             // teleport the button
             let viewport = self

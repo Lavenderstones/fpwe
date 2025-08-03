@@ -60,7 +60,7 @@ impl INode for Fired {
             player.bind_mut().play(&format!("fired/{i}"));
 
             player.signals().done().connect_self(|player| {
-                change_scene(&player.base(), "intro");
+                change_scene(&player.base(), "intro", true);
             });
         });
     }

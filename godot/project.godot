@@ -21,6 +21,7 @@ boot_splash/image="uid://l7puppqdk13j"
 [autoload]
 
 GameState="*res://scenes/_autoload.tscn"
+SceneTransitioner="*res://addons/ninetailsrabbit.indie_blueprint_scene_transition/src/scene_transitioner.tscn"
 
 [display]
 
@@ -28,6 +29,10 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/resizable=false
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ninetailsrabbit.indie_blueprint_scene_transition/plugin.cfg")
 
 [rendering]
 
