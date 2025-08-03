@@ -103,13 +103,13 @@ impl Shift {
         });
 
         let shift_ref = self.base().clone();
-        access(&mut self.page, |sprite| {
+        access(&mut self.page, |mut sprite| {
             let texture =
                 get_asset::<Texture2D>(&format!("pages/{}/{}.webp", self.sanity, self.current));
             sprite.set_texture(&texture);
-            let mut node = sprite.clone().upcast::<Node2D>();
-            let to = node.get_position();
-            animate_position(&mut node, Vector2::new(to.x, -250.), to, 0.75).map(|mut tween| {
+            let to = sprite.get_position();
+            sprite.set_position(Vector2::new(to.x, -250.));
+            animate_position(&mut sprite, to, 0.75).map(|mut tween| {
                 tween.signals().finished().connect_self(move |_| {
                     let mut shift = shift_ref.clone().cast::<Shift>();
                     shift.bind_mut().animating = false;
@@ -160,7 +160,7 @@ impl Shift {
                     .map(|parent| parent.add_child(&node));
                 let mut node = node.clone().cast::<Node2D>();
                 let from = node.get_position();
-                animate_position(&mut node, from, Vector2::new(1500., from.y), 1.).map(
+                animate_position(&mut node, Vector2::new(1500., from.y), 1.).map(
                     |mut tween: Gd<godot::classes::Tween>| {
                         let mut node = node.clone();
                         tween.signals().finished().connect_self(move |_| {

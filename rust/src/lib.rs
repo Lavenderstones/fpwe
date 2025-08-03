@@ -1,3 +1,5 @@
+#![feature(trivial_bounds)]
+
 use godot::prelude::*;
 
 pub(crate) mod helpers;

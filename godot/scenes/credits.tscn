@@ -440,9 +440,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Credits" type="Credits" node_paths=PackedStringArray("rain_anim", "text")]
-rain_anim = NodePath("Rain")
-text = NodePath("Text")
+[node name="Credits" type="Credits" node_paths=PackedStringArray("rain", "label")]
+rain = NodePath("Rain")
+label = NodePath("Text")
 
 [node name="Music" type="AudioPlayer" parent="."]
 restart = true

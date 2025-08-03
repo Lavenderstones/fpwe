@@ -30,17 +30,14 @@ where
     node.as_mut().map(mapper)
 }
 
-pub(crate) fn animate_position(
-    node: &mut Gd<Node2D>,
-    from: Vector2,
-    to: Vector2,
-    duration: f64,
-) -> Option<Gd<Tween>> {
-    node.set_position(from);
+pub(crate) fn animate_position<T>(node: &mut Gd<T>, to: Vector2, duration: f64) -> Option<Gd<Tween>>
+where
+    T: GodotClass + Inherits<Node>,
+{
+    let mut node = node.clone().upcast::<Node>();
     let tween = node.create_tween();
     tween.map(|mut tween| {
-        tween.tween_property(&*node, "position", &to.to_variant(), duration);
-        tween.play();
+        tween.tween_property(&node, "position", &to.to_variant(), duration);
         tween
     })
 }

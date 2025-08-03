@@ -30,4 +30,10 @@ impl State {
             Sanity::Hell => unreachable!(),
         };
     }
+
+    pub(crate) fn reset(&mut self) {
+        self.credits = 0;
+        self.sanity = Sanity::default();
+        self.fired_seen.clear();
+    }
 }

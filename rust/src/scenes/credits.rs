@@ -1,6 +1,11 @@
-use godot::{classes::{AnimatedSprite2D, Label}, prelude::*};
-
-use crate::helpers::{access, animate_position};
+use crate::{
+    helpers::{access, animate_position, change_scene},
+    state::State,
+};
+use godot::{
+    classes::{AnimatedSprite2D, Label},
+    prelude::*,
+};
 
 #[derive(GodotClass)]
 #[class(init, base=Node)]
@@ -8,37 +13,38 @@ struct Credits {
     base: Base<Node>,
 
     #[export]
-    rain_anim: Option<Gd<AnimatedSprite2D>>,
-
+    rain: Option<Gd<AnimatedSprite2D>>,
     #[export]
-    text: Option<Gd<Label>>,
+    label: Option<Gd<Label>>,
 }
 
 #[godot_api]
 impl INode for Credits {
     fn ready(&mut self) {
-        access(&mut self.rain_anim, |sprite| {
+        access(&mut self.rain, |sprite| {
             sprite.play();
         });
 
-        access(&mut self.text, |text| {
-            let mut node = text.clone().upcast::<Node>().cast::<Node2D>();
-
+        let base = self.base().clone();
+        access(&mut self.label, |text| {
+            let mut node = text.clone();
             let from = node.get_position();
-
-            let mut dest = node.get_position();
-            dest.y += 3400.0;
 
             animate_position(
                 &mut node,
-                from,
-                dest,
-                60.0
-            ).map(
-                |mut tween: Gd<godot::classes::Tween>| {
-                    tween.play()
-                },
-            );
+                Vector2::new(from.x, from.y - text.get_size().y),
+                60.0,
+            )
+            .map(|mut tween: Gd<godot::classes::Tween>| {
+                tween.signals().finished().connect_self(move |_| {
+                    // reset state
+                    let mut state = State::get(&base);
+                    state.bind_mut().reset();
+                    // go to main menu
+                    change_scene(&base, "menu");
+                });
+                tween.play()
+            });
         });
     }
 }

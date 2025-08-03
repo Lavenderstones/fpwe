@@ -3,24 +3,27 @@ use crate::{
     player::AudioPlayer,
     state::State,
 };
-use godot::{classes::{AnimatedSprite2D, Label}, prelude::*};
+use godot::{
+    classes::{AnimatedSprite2D, Label},
+    prelude::*,
+};
 
 const FIRED_SOUND_COUNT: u8 = 5;
 
 const FIRE_MESSAGES: [&'static str; 13] = [
     "You were fired for bad odour.",
-	"You were fired for sitting in a funny position.",
-	"You're fired. We know you did it.\nWhat's 'it'? No thanks, I've just had lunch.",
-	"You were fired for your Louis Armstrong impression. It's getting old.",
-	"You were struck by the banhammer! I, your manager, am become meme.",
-	"Fired.\nI asked for a sandwich\nYou said 'You want beef?'\nGet out my office.\nWasteman.",
-	"We've decided to move on with another applicant",
-	"You are done. Fired. Do not show your face at the office again.",
-	"This is your shot at freedom, start running and dont turn ba-\nSorry, we had to fire who wrote these messages for treason.",
-	"You can run but you cant hide. y̵̨̩̱̓ö̷́̈͠͝u̷͚̓̊͘ ̶̯̒̔͜c̵̦͕̘̄a̵̟̯̅̓n̵̫͂̓̔ ̸̆͒͊͝n̶̆́̑͝e̴̛͌̅ver h̴̑̽̂͋ỉ̴̒̚͝ḑ̶̃ę̸͉͒͛",
-	"Fired for rebellious home lifestyle.",
-	"Fired for contraband. Didn't we say tell you to keep away from books?",
-	"Your execution has been scheduled for 3 hours. Thank you for working at our company, valued employee!",
+    "You were fired for sitting in a funny position.",
+    "You're fired. We know you did it.\nWhat's 'it'? No thanks, I've just had lunch.",
+    "You were fired for your Louis Armstrong impression. It's getting old.",
+    "You were struck by the banhammer! I, your manager, am become meme.",
+    "Fired.\nI asked for a sandwich\nYou said 'You want beef?'\nGet out my office.\nWasteman.",
+    "We've decided to move on with another applicant",
+    "You are done. Fired. Do not show your face at the office again.",
+    "This is your shot at freedom, start running and dont turn ba-\nSorry, we had to fire who wrote these messages for treason.",
+    "You can run but you cant hide. y̵̨̩̱̓ö̷́̈͠͝u̷͚̓̊͘ ̶̯̒̔͜c̵̦͕̘̄a̵̟̯̅̓n̵̫͂̓̔ ̸̆͒͊͝n̶̆́̑͝e̴̛͌̅ver h̴̑̽̂͋ỉ̴̒̚͝ḑ̶̃ę̸͉͒͛",
+    "Fired for rebellious home lifestyle.",
+    "Fired for contraband. Didn't we say tell you to keep away from books?",
+    "Your execution has been scheduled for 3 hours. Thank you for working at our company, valued employee!",
 ];
 
 #[derive(GodotClass)]
