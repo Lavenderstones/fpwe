@@ -129,7 +129,7 @@ impl Shift {
         access(&mut self.miranda, |player| {
             let max = if self.sanity == 2 && !correct { 5 } else { 4 };
             player.bind_mut().play(&format!(
-                "miranda/{}/{}/{}",
+                "{}/{}/{}",
                 if correct { "praise" } else { "scold" },
                 self.sanity,
                 rand::random_range(0..=max)
