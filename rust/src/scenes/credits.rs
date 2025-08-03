@@ -3,7 +3,8 @@ use crate::{
     state::State,
 };
 use godot::{
-    classes::{AnimatedSprite2D, Label},
+    classes::{AnimatedSprite2D, InputEvent, InputEventKey, Label},
+    global::Key,
     prelude::*,
 };
 
@@ -46,5 +47,19 @@ impl INode for Credits {
                 tween.play()
             });
         });
+    }
+
+    fn input(&mut self, event: Gd<InputEvent>) {
+        if let Ok(key) = event.try_cast::<InputEventKey>()
+            && key.is_pressed()
+        {
+            match key.get_keycode() {
+                Key::SPACE | Key::ENTER => {
+                    // skip the intro
+                    change_scene(&self.base(), "shift", false);
+                }
+                _ => {}
+            }
+        }
     }
 }

@@ -64,7 +64,11 @@ impl Shift {
         if unseen.is_empty() {
             let mut state = State::get(&self.base());
             let scene = if self.sanity == Sanity::Hell {
-                "give-up"
+                if cfg!(target_arch = "wasm32") {
+                    "credits"
+                } else {
+                    "give-up"
+                }
             } else {
                 state.bind_mut().next_shift();
                 "fired"
@@ -125,7 +129,7 @@ impl Shift {
 impl Shift {
     #[func]
     fn handle_choice(&mut self, accept: bool) {
-        if self.animating {
+        if self.animating && !cfg!(debug_assertions) {
             return;
         }
 

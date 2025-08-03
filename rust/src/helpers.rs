@@ -22,10 +22,8 @@ pub(crate) fn change_scene(node: &Node, scene: &str, should_trans: bool) {
     if should_trans {
         let mut manager = node.get_node_as::<Node>("/root/IndieBlueprintSceneTransitioner");
         manager.call("transition_to", &[path.to_variant()]);
-    } else {
-        node.get_tree()
-            .as_mut()
-            .map(|tree| tree.change_scene_to_file(&path));
+    } else if let Some(mut tree) = node.get_tree() {
+        tree.change_scene_to_file(&path);
     }
 }
 

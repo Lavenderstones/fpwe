@@ -17,10 +17,7 @@ pub(crate) struct State {
 
 impl State {
     pub(crate) fn get(node: &Node) -> Gd<Self> {
-        node.get_tree()
-            .and_then(|tree| tree.get_root())
-            .map(|root| root.get_node_as::<State>("GameState"))
-            .expect("State should have been autoloaded")
+        node.get_node_as::<State>("/root/GameState")
     }
 
     pub(crate) fn next_shift(&mut self) {
