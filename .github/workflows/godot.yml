@@ -93,7 +93,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: |
-            godot
+            godot-headless
             ~/.local/share/godot/export_templates
           key: ${{ needs.setup-godot.outputs.godot-cache-key }}
           fail-on-cache-miss: true

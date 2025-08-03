@@ -6,6 +6,7 @@ on:
     paths:
       - "godot/**"
       - "rust/**"
+      - ".github/workflows/*.yml"
   pull_request:
     branches: [main]
     paths:
