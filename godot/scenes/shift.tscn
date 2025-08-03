@@ -26,16 +26,16 @@ volume_db = 10.0
 
 [node name="UI" type="Node" parent="."]
 
-[node name="Screen" type="Sprite2D" parent="UI"]
-position = Vector2(1096, 110)
-scale = Vector2(3, 3)
-texture = ExtResource("2_m03re")
-
 [node name="Background" type="Sprite2D" parent="UI"]
 z_index = -1
 position = Vector2(640, 360)
 scale = Vector2(4, 4)
 texture = ExtResource("3_5i7ea")
+
+[node name="Screen" type="Sprite2D" parent="UI"]
+position = Vector2(1096, 110)
+scale = Vector2(3, 3)
+texture = ExtResource("2_m03re")
 
 [node name="Info Box" type="Sprite2D" parent="UI"]
 z_index = -1

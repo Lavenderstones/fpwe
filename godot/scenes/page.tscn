@@ -47,7 +47,6 @@ texture_hover = ExtResource("4_xsqhj")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="Buttons/Accept"]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.081

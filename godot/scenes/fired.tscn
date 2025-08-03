@@ -438,9 +438,10 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Fired" type="Fired" node_paths=PackedStringArray("background", "player")]
+[node name="Fired" type="Fired" node_paths=PackedStringArray("background", "player", "fired")]
 background = NodePath("Background")
 player = NodePath("Player")
+fired = NodePath("Fired")
 
 [node name="Background" type="AnimatedSprite2D" parent="."]
 position = Vector2(642, 361)
@@ -456,7 +457,8 @@ offset_top = 1.0
 offset_right = 1282.0
 offset_bottom = 721.0
 theme_override_fonts/font = ExtResource("2_48c18")
-theme_override_font_sizes/font_size = 128
+theme_override_font_sizes/font_size = 100
 text = "YOU'RE FIRED!"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 2
