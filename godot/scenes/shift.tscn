@@ -33,7 +33,7 @@ texture = ExtResource("2_m03re")
 
 [node name="Background" type="Sprite2D" parent="UI"]
 z_index = -1
-position = Vector2(643, 359)
+position = Vector2(640, 360)
 scale = Vector2(4, 4)
 texture = ExtResource("3_5i7ea")
 
