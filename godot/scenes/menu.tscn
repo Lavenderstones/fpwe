@@ -37,7 +37,7 @@ offset_bottom = 232.0
 action_mode = 0
 texture_normal = ExtResource("4_13sgg")
 texture_hover = ExtResource("5_i6lef")
-stretch_mode = 0
+stretch_mode = 4
 
 [node name="Label" type="Label" parent="UI/Buttons/Start"]
 layout_mode = 1
@@ -54,17 +54,38 @@ text = "Go to work"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Quit" type="TextureButton" parent="UI/Buttons"]
-offset_left = 955.0
-offset_top = 265.0
-offset_right = 1201.0
-offset_bottom = 437.0
+[node name="Fullscreen" type="TextureButton" parent="UI/Buttons"]
+offset_left = 952.0
+offset_top = 272.0
+offset_right = 1199.0
+offset_bottom = 442.0
+texture_normal = ExtResource("4_13sgg")
+texture_hover = ExtResource("5_i6lef")
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="UI/Buttons/Fullscreen"]
+offset_top = 8.0
+offset_right = 240.0
+offset_bottom = 168.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("3_g3eks")
+theme_override_font_sizes/font_size = 32
+text = "Toggle
+Fullscreen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Resign" type="TextureButton" parent="UI/Buttons"]
+offset_left = 953.0
+offset_top = 475.0
+offset_right = 1199.0
+offset_bottom = 647.0
 action_mode = 0
 texture_normal = ExtResource("4_13sgg")
 texture_hover = ExtResource("5_i6lef")
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="UI/Buttons/Quit"]
+[node name="Label" type="Label" parent="UI/Buttons/Resign"]
 layout_mode = 0
 offset_left = 5.0
 offset_top = 7.0
@@ -87,4 +108,5 @@ theme_override_fonts/font = ExtResource("3_g3eks")
 text = "Fast Paced Working Environment by the LavenderStones team, GMTK 2025 Submission build"
 
 [connection signal="pressed" from="UI/Buttons/Start" to="." method="start_game"]
-[connection signal="pressed" from="UI/Buttons/Quit" to="." method="quit_game"]
+[connection signal="button_down" from="UI/Buttons/Fullscreen" to="." method="toggle_fullscreen"]
+[connection signal="pressed" from="UI/Buttons/Resign" to="." method="quit_game"]

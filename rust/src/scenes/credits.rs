@@ -33,7 +33,7 @@ impl INode for Credits {
             animate_position(
                 &mut node,
                 Vector2::new(from.x, from.y - text.get_size().y),
-                60.0,
+                64.05,
             )
             .map(|mut tween: Gd<godot::classes::Tween>| {
                 tween.signals().finished().connect_self(move |_| {

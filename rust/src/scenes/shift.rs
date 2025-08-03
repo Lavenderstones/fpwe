@@ -69,7 +69,7 @@ impl Shift {
                 state.bind_mut().next_shift();
                 "fired"
             };
-            change_scene(&self.base(), scene, false);
+            change_scene(&self.base(), scene, self.sanity != Sanity::Hell);
         } else {
             let &index = unseen
                 .choose(&mut rand::rng())

@@ -20,23 +20,8 @@ where
 pub(crate) fn change_scene(node: &Node, scene: &str, should_trans: bool) {
     let path = get_path(&format!("scenes/{scene}.tscn"));
     if should_trans {
-        let trans = "color_fade".to_variant();
         let mut manager = node.get_node_as::<Node>("/root/IndieBlueprintSceneTransitioner");
-        let mut args = Dictionary::new();
-        {
-            let mut r#in = Dictionary::new();
-            let _ = r#in.insert("duration", 0.5);
-            let _ = args.insert("in", r#in);
-        }
-        {
-            let mut out = Dictionary::new();
-            let _ = out.insert("duration", 1.0);
-            let _ = args.insert("out", out);
-        }
-        manager.call(
-            "transition_to",
-            &[path.to_variant(), trans.clone(), trans, args.to_variant()],
-        );
+        manager.call("transition_to", &[path.to_variant()]);
     } else {
         node.get_tree()
             .as_mut()

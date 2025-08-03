@@ -3870,3 +3870,8 @@ scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_8pu6a")
 
 [node name="Audio" type="AudioPlayer" parent="."]
+volume_db = 10.0
+
+[node name="EndTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true

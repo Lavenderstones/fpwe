@@ -66,7 +66,7 @@ impl INode for Intro {
 
 fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
     if intro > LAST_SNIPPET {
-        return change_scene(&player.base(), "shift", true);
+        return change_scene(&player.base(), "shift", false);
     }
 
     // play the intro audio
@@ -74,7 +74,7 @@ fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
 
     // at the end of the audio, play the next custom audio
     if intro == LAST_SNIPPET {
-        return change_scene(&player.base(), "shift", true);
+        return change_scene(&player.base(), "shift", false);
     }
 
     player.signals().done().connect_self(move |player| {
