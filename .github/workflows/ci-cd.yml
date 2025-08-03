@@ -50,7 +50,6 @@ jobs:
             rust-Windows ARM64
             rust-Linux x86_64
             rust-Linux ARM64
-            rust-macOS Universal
             rust-Web Threaded
             rust-Web Single-threaded
           failOnError: false
