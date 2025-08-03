@@ -21,7 +21,7 @@ boot_splash/image="uid://l7puppqdk13j"
 [autoload]
 
 GameState="*res://scenes/_autoload.tscn"
-SceneTransitioner="*res://addons/ninetailsrabbit.indie_blueprint_scene_transition/src/scene_transitioner.tscn"
+IndieBlueprintSceneTransitioner="*res://addons/ninetailsrabbit.indie_blueprint_scene_transition/src/scene_transitioner.tscn"
 
 [display]
 

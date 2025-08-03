@@ -21,7 +21,7 @@ pub(crate) fn change_scene(node: &Node, scene: &str, should_trans: bool) {
     let path = get_path(&format!("scenes/{scene}.tscn"));
     if should_trans {
         let trans = "color_fade".to_variant();
-        let mut manager = node.get_node_as::<Node>("/root/SceneTransitioner");
+        let mut manager = node.get_node_as::<Node>("/root/IndieBlueprintSceneTransitioner");
         let mut args = Dictionary::new();
         {
             let mut r#in = Dictionary::new();
