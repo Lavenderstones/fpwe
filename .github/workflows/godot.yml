@@ -135,7 +135,11 @@ jobs:
       - name: Export game
         run: |
           cd godot
-          ../godot-headless --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/${{ vars.EXPORT_NAME }}"
+          if [[ "${{ matrix.preset.name }}" == *"Web"* ]]; then
+            ../godot-headless --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/index.html"
+          else
+            ../godot-headless --headless --export-release "${{ matrix.preset.name }}" "../exports/${{ matrix.preset.artifact-name }}/${{ vars.EXPORT_NAME }}"
+          fi
 
       - name: Create archive for upload
         run: |
