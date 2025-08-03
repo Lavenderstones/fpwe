@@ -1,4 +1,4 @@
-name: Export Game Builds
+name: export godot
 
 on:
   workflow_call:
@@ -10,6 +10,9 @@ jobs:
     outputs:
       godot-cache-key: ${{ steps.godot-cache-key.outputs.key }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Generate Godot cache key
         id: godot-cache-key
         run: echo "key=godot-${{ vars.GODOT_VERSION }}" >> $GITHUB_OUTPUT
@@ -22,6 +25,20 @@ jobs:
             godot-headless
             ~/.local/share/godot/export_templates
           key: ${{ steps.godot-cache-key.outputs.key }}
+
+      - name: Download Godot and export templates
+        if: steps.godot-cache.outputs.cache-hit != 'true'
+        run: |
+          wget https://github.com/godotengine/godot-builds/releases/download/Godot_v${{ vars.GODOT_VERSION }}_linux.x86_64.zip
+          wget https://github.com/godotengine/godot-builds/releases/download/Godot_v${{ vars.GODOT_VERSION }}_export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.${{ vars.RELEASE_NAME || 'stable' }}
+          unzip Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_linux.x86_64.zip
+          mv Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_linux.x86_64 godot-headless
+          chmod +x godot-headless
+          unzip Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_export_templates.tpz -d template_temp
+          cp -r template_temp/templates/* ~/.local/share/godot/export_templates/${{ vars.GODOT_VERSION }}.${{ vars.RELEASE_NAME || 'stable' }}/
+          rm -rf template_temp
+          rm -f Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_export_templates.tpz Godot_v${{ vars.GODOT_VERSION }}-${{ vars.RELEASE_NAME || 'stable' }}_linux.x86_64.zip
 
   export-game:
     name: Export ${{ matrix.preset.name }}

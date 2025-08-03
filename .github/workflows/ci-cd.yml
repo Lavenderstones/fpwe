@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: ci/cd
 
 on:
   push:
@@ -17,19 +17,19 @@ jobs:
   # build rust extensions for all platforms
   build-rust:
     name: Build Rust Extensions
-    uses: ./.github/workflows/build-rust.yml
+    uses: ./.github/workflows/rust.yml
 
   # export game builds for all platforms
   export-game:
     name: Export Game Builds
     needs: build-rust
-    uses: ./.github/workflows/export-game.yml
+    uses: ./.github/workflows/godot.yml
 
   # deploy web builds to GitHub Pages
   deploy-web:
     name: Deploy to GitHub Pages
     needs: export-game
-    uses: ./.github/workflows/deploy-pages.yml
+    uses: ./.github/workflows/web.yml
     permissions:
       contents: read
       pages: write
