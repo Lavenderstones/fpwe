@@ -1,4 +1,4 @@
-use crate::helpers::change_scene;
+use crate::helpers::{access, change_scene};
 use godot::prelude::*;
 
 #[derive(GodotClass)]
@@ -16,8 +16,9 @@ impl Menu {
 
     #[func]
     fn quit_game(&self) {
-        if let Some(tree) = self.base().get_tree().as_mut() {
-            tree.quit()
-        }
+        let mut tree = self.base().get_tree();
+        access(&mut tree, |tree| {
+            tree.quit();
+        });
     }
 }

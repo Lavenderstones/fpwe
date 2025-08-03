@@ -1,6 +1,9 @@
-use godot::{classes::ResourceLoader, prelude::*};
+use godot::{
+    classes::{ResourceLoader, Tween},
+    prelude::*,
+};
 
-pub(crate) fn get_path(path: &str) -> String {
+fn get_path(path: &str) -> String {
     format!("res://{}", path)
 }
 
@@ -25,4 +28,19 @@ where
     F: FnOnce(&mut Gd<T>) -> U,
 {
     node.as_mut().map(mapper)
+}
+
+pub(crate) fn animate_position(
+    node: &mut Gd<Node2D>,
+    from: Vector2,
+    to: Vector2,
+    duration: f64,
+) -> Option<Gd<Tween>> {
+    node.set_position(from);
+    let tween = node.create_tween();
+    tween.map(|mut tween| {
+        tween.tween_property(&*node, "position", &to.to_variant(), duration);
+        tween.play();
+        tween
+    })
 }

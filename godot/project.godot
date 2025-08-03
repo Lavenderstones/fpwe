@@ -20,7 +20,7 @@ boot_splash/image="uid://l7puppqdk13j"
 
 [autoload]
 
-GameState="*res://scenes/_state.tscn"
+GameState="*res://scenes/_autoload.tscn"
 
 [display]
 

@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=3 uid="uid://vwgxxll1defb"]
+
+[ext_resource type="FontFile" uid="uid://tamh76v0r4hy" path="res://assets/ttf/Tiny5/Tiny5-Regular.ttf" id="1_5g3ik"]
+[ext_resource type="Texture2D" uid="uid://bgn6lktql3pxg" path="res://assets/pages/normal/0.webp" id="2_tecwl"]
+[ext_resource type="Texture2D" uid="uid://cf5nr8uo62y4d" path="res://assets/ui/button/normal.webp" id="3_kwiik"]
+[ext_resource type="Texture2D" uid="uid://ct570l4rkvas6" path="res://assets/ui/button/hover.webp" id="4_xsqhj"]
+
+[node name="Page" type="Node"]
+
+[node name="Title" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 48.0
+offset_right = 471.0
+offset_bottom = 141.0
+theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
+theme_override_fonts/font = ExtResource("1_5g3ik")
+theme_override_font_sizes/font_size = 32
+text = "Title"
+autowrap_mode = 3
+
+[node name="Description" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 143.0
+offset_right = 474.0
+offset_bottom = 266.0
+theme_override_colors/font_color = Color(1, 0.996078, 0.996078, 1)
+theme_override_fonts/font = ExtResource("1_5g3ik")
+theme_override_font_sizes/font_size = 18
+text = "Description"
+autowrap_mode = 3
+
+[node name="Texture" type="Sprite2D" parent="."]
+position = Vector2(653, 303)
+scale = Vector2(4, 4)
+texture = ExtResource("2_tecwl")
+
+[node name="Buttons" type="Node" parent="."]
+
+[node name="Accept" type="TextureButton" parent="Buttons"]
+offset_left = 162.0
+offset_top = 520.0
+offset_right = 409.0
+offset_bottom = 693.0
+action_mode = 0
+texture_normal = ExtResource("3_kwiik")
+texture_hover = ExtResource("4_xsqhj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="Buttons/Accept"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.081
+offset_left = 6.0
+offset_top = 8.0
+offset_right = 217.993
+offset_bottom = 168.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("1_5g3ik")
+theme_override_font_sizes/font_size = 32
+text = "Accept"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Unaccept" type="TextureButton" parent="Buttons"]
+offset_left = 883.0
+offset_top = 525.0
+offset_right = 1125.0
+offset_bottom = 695.0
+action_mode = 0
+texture_normal = ExtResource("3_kwiik")
+texture_hover = ExtResource("4_xsqhj")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Buttons/Unaccept"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 11.0
+offset_right = 237.0
+offset_bottom = 163.0
+theme_override_colors/font_color = Color(0.168627, 0.211765, 0.203922, 1)
+theme_override_fonts/font = ExtResource("1_5g3ik")
+theme_override_font_sizes/font_size = 32
+text = "Unaccept"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,8 +1,6 @@
-use std::collections::HashSet;
-
 use crate::{
     Page,
-    helpers::{access, change_scene, get_asset},
+    helpers::{access, animate_position, change_scene, get_asset},
     player::AudioPlayer,
     state::{Sanity, State},
 };
@@ -11,6 +9,7 @@ use godot::{
     prelude::*,
 };
 use rand::seq::IndexedRandom;
+use std::collections::HashSet;
 
 #[derive(GodotClass)]
 #[class(init, base = Node)]
@@ -21,6 +20,7 @@ struct Shift {
     sanity: Sanity,
     current: usize,
     seen: HashSet<usize>,
+    animating: bool,
 
     // -- nodes --
     #[export]
@@ -102,10 +102,21 @@ impl Shift {
             label.set_text(page.description);
         });
 
+        let shift_ref = self.base().clone();
         access(&mut self.page, |sprite| {
             let texture =
                 get_asset::<Texture2D>(&format!("pages/{}/{}.webp", self.sanity, self.current));
             sprite.set_texture(&texture);
+            let mut node = sprite.clone().upcast::<Node2D>();
+            let to = node.get_position();
+            animate_position(&mut node, Vector2::new(to.x, -250.), to, 0.75).map(|mut tween| {
+                tween.signals().finished().connect_self(move |_| {
+                    let mut shift = shift_ref.clone().cast::<Shift>();
+                    shift.bind_mut().animating = false;
+                });
+                self.animating = true;
+                tween.play()
+            });
         });
     }
 }
@@ -114,6 +125,10 @@ impl Shift {
 impl Shift {
     #[func]
     fn handle_choice(&mut self, accept: bool) {
+        if self.animating {
+            return;
+        }
+
         // check whether the answer is correct
         let page = self.current_page();
         let correct = page.accept == accept;
@@ -135,6 +150,26 @@ impl Shift {
                 self.sanity,
                 rand::random_range(0..=max)
             ));
+        });
+
+        access(&mut self.page, |sprite| {
+            sprite.duplicate().map(|node| {
+                sprite
+                    .get_parent()
+                    .as_mut()
+                    .map(|parent| parent.add_child(&node));
+                let mut node = node.clone().cast::<Node2D>();
+                let from = node.get_position();
+                animate_position(&mut node, from, Vector2::new(1500., from.y), 1.).map(
+                    |mut tween: Gd<godot::classes::Tween>| {
+                        let mut node = node.clone();
+                        tween.signals().finished().connect_self(move |_| {
+                            node.queue_free();
+                        });
+                        tween.play()
+                    },
+                );
+            })
         });
 
         self.next_page();

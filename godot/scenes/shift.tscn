@@ -12,7 +12,7 @@
 credits = NodePath("UI/Credits/Value")
 title = NodePath("UI/Page/Title")
 description = NodePath("UI/Page/Description")
-page = NodePath("UI/Page/Texture")
+page = NodePath("UI/Current")
 music = NodePath("Audio/Music")
 miranda = NodePath("Audio/Miranda")
 
@@ -43,6 +43,11 @@ position = Vector2(249, 147)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("4_5i7ea")
 
+[node name="Current" type="Sprite2D" parent="UI"]
+position = Vector2(690, 303)
+scale = Vector2(4, 4)
+texture = ExtResource("2_sxo7b")
+
 [node name="Page" type="Node" parent="UI"]
 
 [node name="Title" type="Label" parent="UI/Page"]
@@ -66,11 +71,6 @@ theme_override_fonts/font = ExtResource("5_m03re")
 theme_override_font_sizes/font_size = 18
 text = "Description"
 autowrap_mode = 3
-
-[node name="Texture" type="Sprite2D" parent="UI/Page"]
-position = Vector2(653, 303)
-scale = Vector2(4, 4)
-texture = ExtResource("2_sxo7b")
 
 [node name="Buttons" type="Node" parent="UI/Page"]
 
