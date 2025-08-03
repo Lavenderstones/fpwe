@@ -41,6 +41,11 @@ struct Shift {
 #[godot_api]
 impl INode for Shift {
     fn ready(&mut self) {
+        // music
+        access(&mut self.music, |player| {
+            player.bind_mut().play(&format!("shift/{}", self.sanity));
+        });
+
         self.next_page();
     }
 }
@@ -58,7 +63,15 @@ impl Shift {
             .collect();
 
         if unseen.is_empty() {
-            change_scene(&self.base(), "intro");
+            let mut state = get_state(&self.base());
+
+            let scene = if self.sanity == 2 {
+                "credits"
+            } else {
+                state.call("next_sanity", &[]);
+                "fired"
+            };
+            change_scene(&self.base(), scene);
         } else {
             let &index = unseen
                 .choose(&mut rand::rng())
@@ -74,13 +87,6 @@ impl Shift {
         // --- global state ---
         let mut state = get_state(&self.base());
         self.sanity = state.call("get_sanity", &[]).to::<u8>();
-
-        // music
-        access(&mut self.music, |player| {
-            player
-                .bind_mut()
-                .play(&format!("shift/{}.ogg", self.sanity));
-        });
 
         // credits
         access(&mut self.credits, |label| {
@@ -122,11 +128,12 @@ impl Shift {
         // praise or scold the player
         access(&mut self.miranda, |player| {
             let max = if self.sanity == 2 && !correct { 5 } else { 4 };
-            let index = rand::random_range(0..=(max as usize));
-            let dir = if correct { "praise" } else { "scold" };
-            player
-                .bind_mut()
-                .play(&format!("miranda/{dir}/{}/{index}.ogg", self.sanity));
+            player.bind_mut().play(&format!(
+                "miranda/{}/{}/{}",
+                if correct { "praise" } else { "scold" },
+                self.sanity,
+                rand::random_range(0..=max)
+            ));
         });
 
         self.next_page();

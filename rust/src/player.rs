@@ -30,17 +30,17 @@ impl IAudioStreamPlayer2D for AudioPlayer {
     }
 }
 
-impl AudioPlayer {
-    pub(crate) fn play(&mut self, path: &str) {
-        let stream = get_asset::<AudioStream>(&format!("audio/{path}"));
-        self.base_mut().stop();
-        self.base_mut().set_stream(&stream);
-        self.base_mut().play();
-    }
-}
-
 #[godot_api]
 impl AudioPlayer {
     #[signal]
     pub(crate) fn done();
+}
+
+impl AudioPlayer {
+    pub(crate) fn play(&mut self, path: &str) {
+        let stream = get_asset::<AudioStream>(&format!("audio/{path}.ogg"));
+        self.base_mut().stop();
+        self.base_mut().set_stream(&stream);
+        self.base_mut().play();
+    }
 }

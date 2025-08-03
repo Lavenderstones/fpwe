@@ -44,8 +44,8 @@ impl INode for Intro {
             play(
                 &mut player.bind_mut(),
                 0,
-                format!("miranda/employee/{sanity}/{name}.ogg"),
-                format!("miranda/company/{company}.ogg"),
+                format!("miranda/employee/{sanity}/{name}"),
+                format!("miranda/company/{company}"),
             );
         });
     }
@@ -77,7 +77,7 @@ fn play(player: &mut AudioPlayer, intro: u8, name: String, company: String) {
     }
 
     // play the intro audio
-    player.play(&format!("miranda/intro/{}.ogg", intro));
+    player.play(&format!("miranda/intro/{}", intro));
 
     // at the end of the audio, play the next custom audio
     player.signals().done().connect_self(move |player| {

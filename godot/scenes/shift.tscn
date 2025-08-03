@@ -20,7 +20,6 @@ miranda = NodePath("Audio/Miranda")
 
 [node name="Music" type="AudioPlayer" parent="Audio"]
 restart = true
-autoplay = true
 
 [node name="Miranda" type="AudioPlayer" parent="Audio"]
 volume_db = 10.0

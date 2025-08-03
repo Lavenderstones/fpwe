@@ -1,6 +1,4 @@
-/// The intro cutscene.
+mod fired;
 mod intro;
-/// The main menu.
 mod menu;
-/// A shift.
 mod shift;

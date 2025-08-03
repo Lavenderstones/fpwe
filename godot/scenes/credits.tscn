@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsttsu4jm0nyn"]
+
+[ext_resource type="AudioStream" uid="uid://o5mbllitrivb" path="res://assets/audio/credits.ogg" id="1_0bpdh"]
+
+[node name="Credits" type="Node2D"]
+
+[node name="Music" type="AudioPlayer" parent="."]
+restart = true
+stream = ExtResource("1_0bpdh")
+autoplay = true
