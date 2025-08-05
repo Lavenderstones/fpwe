@@ -1,5 +1,9 @@
 ![Fast Paced Working Environment](banner.png)
 
+- [report for duty](https://isitreallyalive.itch.io/fast)
+- [VOTE FOR PRODUCTIVITY ENHANCEMENT](https://itch.io/jam/gmtk-2025/rate/3765039)
+- [consume approved audio content](https://lucyblight.bandcamp.com/album/fast-paced-working-enviroment-ost)
+
 Wake up. Go to work. Do work. Get fired.
 Wake up. Go to work. Do work. Get fired.
 Wake up. Go to work. Do work. Get fired.
